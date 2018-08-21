@@ -11,5 +11,44 @@
 
     <artifactId>simple-springmvc</artifactId>
 
+    <properties>
+        <tomcat.version>8.5.32</tomcat.version>
+    </properties>
+    <dependencies>
+        <!-- ================start 嵌入式tomcat ===============================-->
+        <!--核心包，只需要该包即可-->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <!--websocket支持-->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <!--jsp支持-->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <!--el表达式支持-->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <!-- ================end 嵌入式tomcat====================================-->
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
