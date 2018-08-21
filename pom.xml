@@ -19,7 +19,6 @@
     </developers>
 
     <modules>
-
         <module>simple-springmvc</module>
     </modules>
 
