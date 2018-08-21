@@ -20,6 +20,7 @@
 
     <modules>
 
+        <module>simple-springmvc</module>
     </modules>
 
     <properties>
