@@ -1,4 +1,4 @@
-package com.github.time69.simple_springmvc;
+package com.github.time69.simple_springmvc.tomcat;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * 描述: 测试使用嵌入式tomcat
+ * 描述: 内嵌式tomcat的使用测试
  *
  * @author <a href="1348555156@qq.com">LeiLi.Zhang</a>
  * @version 0.0.0
@@ -34,7 +34,7 @@ public class EmbedTomcatTest {
 
 
     @Test
-    public void test() throws ServletException, LifecycleException {
+    public void testEmbedTomcat() throws ServletException, LifecycleException {
         tomcat.setBaseDir("tmp");
         tomcat.setHostname("localhost");
         tomcat.setPort(8080);
@@ -97,21 +97,9 @@ public class EmbedTomcatTest {
      * @param context
      */
     private void addServlet(Context context) throws ServletException {
-        HttpServlet servlet = new HttpServlet() {
-            @Override
-            protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-                    throws ServletException, IOException {
-                PrintWriter writer = resp.getWriter();
-
-                writer.println("<html><title>Welcome</title><body>");
-                writer.println("<h1>Hello World!</h1>");
-                writer.println("</body></html>");
-            }
-        };
-
-
         String servletName = "helloServlet";
         String urlPattern = "/hello";
+        HttpServlet servlet = new HelloServlet();
         tomcat.addServlet(context, servletName, servlet);
         context.addServletMappingDecoded(urlPattern, servletName);
     }
@@ -136,24 +124,8 @@ public class EmbedTomcatTest {
         // filter
         FilterDef filterDef = new FilterDef();
         filterDef.addInitParameter("key", "value");
-        Filter helloFilter = new Filter() {
-            @Override
-            public void init(FilterConfig filterConfig) throws ServletException {
-                System.out.println("init.....");
-            }
 
-            @Override
-            public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-                System.out.println("doFilter.....");
-                chain.doFilter(request, response);
-            }
-
-            @Override
-            public void destroy() {
-                System.out.println("destroy.....");
-            }
-        };
-        filterDef.setFilter(helloFilter);
+        filterDef.setFilter(new HelloFilter());
         filterDef.setFilterName("helloFilter");
         context.addFilterDef(filterDef);
 
