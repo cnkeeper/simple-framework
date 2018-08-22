@@ -6,8 +6,6 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.ErrorHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.servlet.ServletHandler;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,11 +36,12 @@ public class EmbedJettyTest {
         server.addConnector(JettyFactory.createServerConnector(server, port));
 
         Map<Class<? extends Servlet>,String> servletMap = new HashMap<>();
-        servletMap.put(HelloServlet.class,"/hello");
+        servletMap.put(DispatcherServlet.class,"/*");
         HandlerList handlerList = new HandlerList();
         handlerList.setHandlers(new Handler[]{
+                JettyFactory.createResourceHandler("./webapp/"),
                 JettyFactory.createWebAppContext("/jetty","./webapp",servletMap),
-//                JettyFactory.createResourceHandler("./webapp/"),
+//                JettyFactory.createServletContextHandler("/jetty","./webapp",servletMap),
                 new DefaultHandler()
         });
 
