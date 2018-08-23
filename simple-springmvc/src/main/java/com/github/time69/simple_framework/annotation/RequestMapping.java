@@ -3,7 +3,7 @@ package com.github.time69.simple_framework.annotation;
 import java.lang.annotation.*;
 
 /**
- * 描述~
+ * 描述: 声明映射的注解，可用于class, method
  *
  * @author <a href="1348555156@qq.com">LeiLi.Zhang</a>
  * @version 0.0.0
