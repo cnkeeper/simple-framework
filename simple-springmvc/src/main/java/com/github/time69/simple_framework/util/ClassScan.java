@@ -20,8 +20,8 @@ import java.util.jar.JarFile;
  * @version 0.0.0
  * @date 2018/8/23
  */
-public final class ClassUtils {
-    private ClassUtils() {
+public final class ClassScan {
+    private ClassScan() {
         throw new UnsupportedOperationException();
     }
 
@@ -42,7 +42,7 @@ public final class ClassUtils {
         boolean recursive = true;
         // 获取包的名字 并进行替换
         String packageName = pack;
-        String packageDirName = packageName.replace(ClassUtils.DOM, ClassUtils.SLASH);
+        String packageDirName = packageName.replace(ClassScan.DOM, ClassScan.SLASH);
         // 定义一个枚举的集合 并进行循环来处理这个目录下的things
         Enumeration<URL> dirs;
         try {
@@ -72,7 +72,7 @@ public final class ClassUtils {
 
     private static void findAndAddClassesInPackageByJar(String packageName, final boolean recursive, Set<Class<?>> classes) {
         JarFile jar;
-        String packageDirName = packageName.replace(ClassUtils.DOM, ClassUtils.SLASH);
+        String packageDirName = packageName.replace(ClassScan.DOM, ClassScan.SLASH);
         try {
             // 获取jar
             URL url = Thread.currentThread().getContextClassLoader().getResource(packageDirName);

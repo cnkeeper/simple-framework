@@ -2,7 +2,7 @@ package com.github.time69.simple_framework;
 
 import com.github.time69.simple_framework.annotation.Controller;
 import com.github.time69.simple_framework.annotation.RequestMapping;
-import com.github.time69.simple_framework.util.ClassUtils;
+import com.github.time69.simple_framework.util.ClassScan;
 import com.github.time69.simple_framework.util.StringUtils;
 
 import javax.servlet.*;
@@ -15,7 +15,6 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * 描述: 前置控制器，所有被拦截的请求入口
@@ -54,7 +53,7 @@ public class DispatcherServlet extends HttpServlet {
 
         List<Class> classesHasAnnotation = new LinkedList<>();
         for (String pack : packageNames) {
-            Class<?>[] classes = ClassUtils.scanPackage(pack);
+            Class<?>[] classes = ClassScan.scanPackage(pack);
             if (null == classes)
                 continue;
             for (Class<?> clazz : classes) {
