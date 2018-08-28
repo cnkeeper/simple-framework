@@ -14,6 +14,11 @@
     <properties>
         <tomcat.version>8.5.32</tomcat.version>
         <jetty.version>9.4.11.v20180605</jetty.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <log4j.version>1.2.17</log4j.version>
+        <log4j2.version>2.10.0</log4j2.version>
+        <commons-logging.version>1.2</commons-logging.version>
     </properties>
     <dependencies>
         <!-- ================start 嵌入式tomcat ===============================-->
@@ -86,6 +91,44 @@
             <scope>test</scope>
         </dependency>
         <!-- =======================end JUnit4===============================-->
+
+        <!-- Logs -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

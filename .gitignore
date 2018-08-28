@@ -7,9 +7,8 @@
 logs/
 */target/
 */.settings/
-*/.svn/
-*/.classpath
 */.project
 .idea/
-target/
-*.iml
+*/.svn/
+*/.classpath
+target/*.iml

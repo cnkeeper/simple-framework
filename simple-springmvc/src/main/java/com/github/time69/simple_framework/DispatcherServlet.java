@@ -15,6 +15,7 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * 描述: 前置控制器，所有被拦截的请求入口
@@ -38,6 +39,10 @@ public class DispatcherServlet extends HttpServlet {
         initHandlerMapping(packages);
     }
 
+    /**
+     * 在加载该servlet时初始化HeadlerMapping列表
+     * @param packages 需要扫描的包路径
+     */
     private void initHandlerMapping(String packages) {
         if (!StringUtils.isNotBlank(packages))
             throw new IllegalArgumentException("there is no packageNames found!");
@@ -61,7 +66,7 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     /**
-     * 扫描类中包含映射的方法
+     * 扫描类中包含RequestMapping映射的方法
      *
      * @param clazz
      */
@@ -88,6 +93,16 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            doDispater(req,resp);
+        }catch (Exception e){
+
+        }
+
         super.service(req, resp);
+    }
+
+    private void doDispater(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+
     }
 }
