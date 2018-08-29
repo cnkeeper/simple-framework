@@ -19,6 +19,7 @@
         <log4j.version>1.2.17</log4j.version>
         <log4j2.version>2.10.0</log4j2.version>
         <commons-logging.version>1.2</commons-logging.version>
+        <lombok.version>1.18.0</lombok.version>
     </properties>
     <dependencies>
         <!-- ================start 嵌入式tomcat ===============================-->
@@ -92,7 +93,7 @@
         </dependency>
         <!-- =======================end JUnit4===============================-->
 
-        <!-- Logs -->
+        <!-- =======================start Logs ==============================-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -129,6 +130,15 @@
             <version>${commons-logging.version}</version>
             <optional>true</optional>
         </dependency>
+        <!-- =======================start Logs ==============================-->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
