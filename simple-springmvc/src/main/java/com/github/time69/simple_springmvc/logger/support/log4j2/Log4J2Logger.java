@@ -1,18 +1,18 @@
-package com.github.time69.simple_springmvc.test.logger.support.logback;
+package com.github.time69.simple_springmvc.logger.support.log4j2;
 
-import com.github.time69.simple_springmvc.test.logger.Logger;
+import com.github.time69.simple_springmvc.logger.Logger;
 
 /**
- * 描述: logback适配
+ * 描述: log4j2适配
  *
  * @author <a href="1348555156@qq.com">LeiLi.Zhang</a>
  * @version 0.0.0
  * @date 2018/8/28
  */
-public class LogBackLogger implements Logger {
-    private ch.qos.logback.classic.Logger logger;
+class Log4J2Logger implements Logger {
+    private org.apache.logging.log4j.Logger logger;
 
-    public LogBackLogger(ch.qos.logback.classic.Logger logger) {
+    public Log4J2Logger(org.apache.logging.log4j.Logger logger) {
         this.logger = logger;
     }
 
@@ -48,7 +48,7 @@ public class LogBackLogger implements Logger {
 
     @Override
     public void warn(String mesage, Object... arguments) {
-        this.logger.trace(mesage, arguments);
+        this.logger.warn(mesage, arguments);
     }
 
     @Override

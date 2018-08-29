@@ -1,4 +1,4 @@
-package com.github.time69.simple_springmvc.test.logger;
+package com.github.time69.simple_springmvc.logger;
 
 /**
  * 描述: 集成外部日志的接口

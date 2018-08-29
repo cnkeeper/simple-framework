@@ -1,8 +1,8 @@
-package com.github.time69.simple_springmvc.test.logger.support.logback;
+package com.github.time69.simple_springmvc.logger.support.logback;
 
 import ch.qos.logback.classic.LoggerContext;
-import com.github.time69.simple_springmvc.test.logger.AbstractLoggerFactory;
-import com.github.time69.simple_springmvc.test.logger.Logger;
+import com.github.time69.simple_springmvc.logger.Logger;
+import com.github.time69.simple_springmvc.logger.AbstractLoggerFactory;
 
 /**
  * 描述~

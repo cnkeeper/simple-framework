@@ -1,6 +1,6 @@
-package com.github.time69.simple_springmvc.test.logger.support.jdk;
+package com.github.time69.simple_springmvc.logger.support.jdk;
 
-import com.github.time69.simple_springmvc.test.logger.Logger;
+import com.github.time69.simple_springmvc.logger.Logger;
 
 import java.util.logging.Level;
 

@@ -1,4 +1,4 @@
-package com.github.time69.simple_springmvc.test.logger;
+package com.github.time69.simple_springmvc.logger;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

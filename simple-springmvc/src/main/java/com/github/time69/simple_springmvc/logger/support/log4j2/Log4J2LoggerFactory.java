@@ -1,7 +1,7 @@
-package com.github.time69.simple_springmvc.test.logger.support.log4j2;
+package com.github.time69.simple_springmvc.logger.support.log4j2;
 
-import com.github.time69.simple_springmvc.test.logger.AbstractLoggerFactory;
-import com.github.time69.simple_springmvc.test.logger.Logger;
+import com.github.time69.simple_springmvc.logger.Logger;
+import com.github.time69.simple_springmvc.logger.AbstractLoggerFactory;
 import org.apache.logging.log4j.LogManager;
 
 
