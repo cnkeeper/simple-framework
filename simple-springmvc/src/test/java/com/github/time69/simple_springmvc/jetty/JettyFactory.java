@@ -3,12 +3,15 @@ package com.github.time69.simple_springmvc.jetty;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
 import javax.servlet.Servlet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 描述~
@@ -124,7 +127,7 @@ public final class JettyFactory {
         return context;
     }
 
-    public static ServletContextHandler createServletContextHandler(String contextPath,String resourceBase, Map<Class<? extends Servlet>, String>... servletS) {
+    public static ServletContextHandler createServletContextHandler(String contextPath, String resourceBase, Map<Class<? extends Servlet>, String>... servletS) {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath(contextPath);
         context.setResourceBase(resourceBase);
@@ -140,24 +143,35 @@ public final class JettyFactory {
         return context;
     }
 
-    public static WebAppContext createWebAppContext(String contextPath, String resourceBase,Map<Class<? extends Servlet>, String>... servletS) {
+    public static WebAppContext createWebAppContextHandler(String contextPath, String resourceBase, Map<Class<? extends Servlet>, String>... servletS) {
         WebAppContext webAppContext = new WebAppContext();
 
         webAppContext.setContextPath(contextPath);
         webAppContext.setResourceBase(resourceBase);
 
-        // 方式1：Servlet级别拦截
+        // add servlet
         if (null != servletS && servletS.length == 1 && null != servletS[0]) {
             for (Map.Entry<Class<? extends Servlet>, String> entry : servletS[0].entrySet()) {
                 webAppContext.addServlet(entry.getKey(), entry.getValue());
             }
         }
 
-        // 方式2：Filter级别拦截
-        // FilterHolder filterHolder = new FilterHolder(ActionFilter.class);
-        // filterHolder.setAsyncSupported(false);
-        // webAppContext.addFilter(ActionFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
-
+        webAppContext.addEventListener(new WebServletContextListener());
         return webAppContext;
+    }
+
+    public static void addServlet(ServletContextHandler context, Servlet servlet, String urlPattern) {
+        context.addServlet(servlet.getClass(), urlPattern);
+    }
+
+    public static void addFilter(ServletContextHandler context, Filter filter, String urlPattern, DispatcherType... dispatcherTypes) {
+        if (null == dispatcherTypes)
+            dispatcherTypes = new DispatcherType[]{DispatcherType.REQUEST};
+
+        context.addFilter(filter.getClass(), urlPattern, EnumSet.copyOf(Arrays.asList(dispatcherTypes)));
+    }
+
+    public static void addListener(ServletContextHandler context, EventListener listener){
+        context.addEventListener(listener);
     }
 }

@@ -40,7 +40,7 @@ public class EmbedJettyTest {
         HandlerList handlerList = new HandlerList();
         handlerList.setHandlers(new Handler[]{
                 JettyFactory.createResourceHandler("./webapp/"),
-                JettyFactory.createWebAppContext("/jetty","./webapp",servletMap),
+                JettyFactory.createWebAppContextHandler("/jetty","./webapp",servletMap),
 //                JettyFactory.createServletContextHandler("/jetty","./webapp",servletMap),
                 new DefaultHandler()
         });

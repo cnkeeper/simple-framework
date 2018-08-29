@@ -10,6 +10,7 @@ import org.apache.tomcat.util.descriptor.web.FilterMap;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
+import java.util.EventListener;
 import java.util.Map;
 
 /**
@@ -114,6 +115,10 @@ public final class TomcatFactory {
         filterMap.addURLPattern(urlPattern);
         filterMap.setFilterName(filterName);
         context.addFilterMap(filterMap);
+    }
+
+    public static void addListener(Context context, EventListener listener ){
+        context.addApplicationListener(listener.getClass().getName());
     }
 
     /**

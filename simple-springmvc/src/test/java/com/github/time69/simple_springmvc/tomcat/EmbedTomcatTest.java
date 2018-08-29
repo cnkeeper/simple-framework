@@ -22,7 +22,7 @@ import java.io.File;
 public class EmbedTomcatTest {
 
     public static void main(String[] args) {
-        Tomcat tomcat = TomcatFactory.createTomcat(8080);
+        Tomcat tomcat = TomcatFactory.createTomcat(8070);
 //        String webappDir = new File("webapp").getAbsolutePath();
 //        tomcat.addWebapp(contextPath, webappDir);
         String contextPath = "/tomcat";
@@ -30,9 +30,12 @@ public class EmbedTomcatTest {
 
         Context context = TomcatFactory.createAndAddContext(tomcat, contextPath, docBase, null);
 
+        TomcatFactory.addListener(context,new WebServletContextListener());
+
         TomcatFactory.addFilter(context, "helloFilter", "/*", new HelloFilter());
 
         TomcatFactory.addServlet(tomcat, context, "helloServlet", "/*", new HelloServlet());
+
 
         // curl http://localhost:8080/tomcat/hello/
         try {
