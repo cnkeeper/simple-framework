@@ -168,9 +168,5 @@ public final class ClassScan {
             }
         }
     }
-
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(scanPackage("com.github.time69.simple_framework.annotation")));
-    }
 }
 
