@@ -25,6 +25,7 @@ import java.util.Map;
  */
 public class DispatcherServlet extends HttpServlet {
     private Map<String, HandlerMapping> handlerMappingMap;
+    private List<HandlerAdapter> handlerAdapters;
 
     private static final String KEY_PACKAGENAMES = "packageNames";
     private static final String PACKAGE_SEPARATOR = ",";
