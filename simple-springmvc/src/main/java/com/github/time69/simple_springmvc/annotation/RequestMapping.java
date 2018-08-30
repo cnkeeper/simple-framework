@@ -1,5 +1,7 @@
 package com.github.time69.simple_springmvc.annotation;
 
+import com.github.time69.simple_springmvc.http.HttpMethod;
+
 import java.lang.annotation.*;
 
 /**
@@ -17,9 +19,5 @@ public @interface RequestMapping {
     String path();
 
     /*请求方法*/
-    Method[] method() default {Method.GET, Method.POST};
-
-    enum Method {
-        GET, POST, PUT, OPTION, DELETE;
-    }
+    HttpMethod[] method() default {HttpMethod.GET, HttpMethod.POST};
 }
