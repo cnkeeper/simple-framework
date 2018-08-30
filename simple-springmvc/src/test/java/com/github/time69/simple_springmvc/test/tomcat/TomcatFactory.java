@@ -36,7 +36,7 @@ public final class TomcatFactory {
      * contextPath配置 <br/>
      * 等效于配置conf/server.xml
      * <pre>
-     *     <Context path="/" docBase="/ump-wwwroot" reloadable="true"></Context>
+     *     <context path="/" docBase="/ump-wwwroot" reloadable="true"></context>
      * </pre>
      *
      * @param tomcat
