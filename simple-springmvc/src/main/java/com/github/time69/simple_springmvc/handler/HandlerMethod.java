@@ -1,5 +1,6 @@
 package com.github.time69.simple_springmvc.handler;
 
+import com.github.time69.simple_springmvc.Handler;
 import lombok.Data;
 
 import java.lang.reflect.Method;
@@ -12,9 +13,10 @@ import java.lang.reflect.Method;
  * @date 2018/8/29
  */
 @Data
-public class HandlerMethod {
-    private Class<?> controlerClass;
-    private Object controllerBean;
+public class HandlerMethod implements Handler{
+    private Class<?> classType;
+    private Object beanInstance;
     private Method method;
     private Object[] parameters;
+    private MethodParameter[] methodParameters;
 }

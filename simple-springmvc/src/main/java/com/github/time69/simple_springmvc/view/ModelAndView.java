@@ -1,5 +1,10 @@
 package com.github.time69.simple_springmvc.view;
 
+import com.github.time69.simple_springmvc.http.HttpStatus;
+import lombok.Data;
+
+import java.util.Map;
+
 /**
  * 描述~
  *
@@ -7,5 +12,9 @@ package com.github.time69.simple_springmvc.view;
  * @version 0.0.0
  * @date 2018/8/23
  */
+@Data
 public class ModelAndView {
+    private Object view;
+    private Map<String,Object> modelMap;
+    private HttpStatus status;
 }

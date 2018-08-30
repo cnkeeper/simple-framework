@@ -38,4 +38,12 @@ public final class LoggerContext {
     public static LoggerFactory getLoggerFactory() {
         return loggerFactory;
     }
+
+    public static Logger getLog(String name) {
+        return loggerFactory.getLog(name);
+    }
+
+    public static Logger getLog(Class<?> clazz) {
+        return loggerFactory.getLog(clazz);
+    }
 }

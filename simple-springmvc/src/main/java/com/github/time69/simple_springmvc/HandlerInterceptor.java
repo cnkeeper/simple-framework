@@ -1,5 +1,7 @@
 package com.github.time69.simple_springmvc;
 
+import com.github.time69.simple_springmvc.view.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,5 +13,12 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2018/8/23
  */
 public interface HandlerInterceptor {
-    void handler(HttpServletRequest httpServletRequest, HttpServletResponse response);
+    /**
+     * @param httpServletRequest
+     * @param response
+     * @return true:继续执行拦截器链; false:终止执行拦截器链
+     */
+    boolean preHandler(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception;
+
+    boolean postHandler(HttpServletRequest httpServletRequest, HttpServletResponse response, ModelAndView modelAndView) throws Exception;
 }

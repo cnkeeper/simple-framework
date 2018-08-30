@@ -1,10 +1,11 @@
 package com.github.time69.simple_springmvc;
 
-import com.github.time69.simple_springmvc.util.ClassScan;
-import com.github.time69.simple_springmvc.util.StringUtils;
-import com.github.time69.simple_springmvc.annotation.Controller;
-import com.github.time69.simple_springmvc.annotation.RequestMapping;
-import com.github.time69.simple_springmvc.handler.HandlerMethod;
+import com.github.time69.simple_springmvc.handler.ApplicationContext;
+import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
+import com.github.time69.simple_springmvc.handler.RequestMappingHandlerMapping;
+import com.github.time69.simple_springmvc.logger.Logger;
+import com.github.time69.simple_springmvc.logger.LoggerContext;
+import com.github.time69.simple_springmvc.view.ModelAndView;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,9 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 描述: 前置控制器，所有被拦截的请求入口
@@ -24,25 +24,19 @@ import java.util.*;
  * @date 2018/8/23
  */
 public class DispatcherServlet extends HttpServlet {
-    private Map<String, HandlerMapping> handlerMappingMap;
-    private List<HandlerAdapter> handlerAdapters;
-    private Map<String, HandlerMethod> handlerMethodMap;
-
+    private static final Logger LOGGER = LoggerContext.getLog(DispatcherServlet.class);
     private static final String KEY_PACKAGENAMES = "packageNames";
-    private static final String PACKAGE_SEPARATOR = ",";
-
-    private static final String URL_SEPARATOR = "/";
+    private List<HandlerMapping> handlerMappings;
+    private List<HandlerAdapter> handlerAdapters;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        String packages = config.getInitParameter(KEY_PACKAGENAMES);
-        initHandlerMapping(packages);
+        //首次加载时扫描Controller，RequestMapping注解
+        ApplicationContext.initHandlerMethod(config.getInitParameter(KEY_PACKAGENAMES));
+        initHandlerMapping();
         initHandlerAdapter();
-        initHandlerMethod(packages);
-        System.out.println(this.handlerMethodMap);
     }
-
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,75 +50,61 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void doDispater(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        HandlerExecutionChain executionChain = getHandlerExecutionChain(req);
+        HandlerAdapter handlerAdapter = getHandlerAdapter(executionChain.getHandler());
 
+        //前置拦截
+        if (!executionChain.applyPreHandler(req, resp)) {
+            //拦截器拦截，不继续处理
+            return;
+        }
+
+        ModelAndView modelAndView = handlerAdapter.handler(req, resp, executionChain.getHandler());
+
+        //后置拦截
+        executionChain.applyPostHandler(req, resp, modelAndView);
+
+        // TODO 解析处理结果
+        processDispatchResult(resp, modelAndView);
+    }
+
+    private HandlerExecutionChain getHandlerExecutionChain(HttpServletRequest req) {
+        for (HandlerMapping handlerMapping : this.handlerMappings) {
+            HandlerExecutionChain handlerChain = handlerMapping.getHander(req);
+            if (null != handlerChain) {
+                return handlerChain;
+            }
+        }
+
+        return null;
+    }
+
+    private void processDispatchResult(HttpServletResponse resp, ModelAndView modelAndView) {
+
+    }
+
+    private HandlerAdapter getHandlerAdapter(Handler handler) {
+        for (HandlerAdapter adapter : this.handlerAdapters) {
+            if (adapter.supports(handler)) {
+                return adapter;
+            }
+        }
+        return null;
     }
 
     /**
-     * 在加载该servlet时初始化HeadlerMapping列表
-     *
-     * @param packages 需要扫描的包路径
+     * TODO 初始化加载handlerMappings
      */
-    private void initHandlerMapping(String packages) {
-
+    private void initHandlerMapping() {
+        this.handlerMappings = Collections.emptyList();
+        this.handlerMappings.add(new RequestMappingHandlerMapping());
     }
 
+    /**
+     * 初始化加载handlerAdapters
+     */
     private void initHandlerAdapter() {
-
+        this.handlerAdapters = Collections.emptyList();
     }
 
-    private void initHandlerMethod(String packages) {
-        Map<String, HandlerMethod> handlerMethodMap = new HashMap<>();
-        if (!StringUtils.isNotBlank(packages))
-            throw new IllegalArgumentException("there is no packageNames found!");
-
-        String[] packageNames = packages.split(PACKAGE_SEPARATOR);
-        if (packageNames == null || packageNames.length < 1)
-            throw new IllegalArgumentException("there is no packageNames found!");
-
-
-        List<Class> classesHasAnnotation = new LinkedList<>();
-        for (String pack : packageNames) {
-            Class<?>[] classes = ClassScan.scanPackage(pack);
-            if (null == classes)
-                continue;
-
-            for (Class<?> clazz : classes) {
-                if (null != clazz.getAnnotation(Controller.class)) {
-                    handlerMethodMap.putAll(scanClassMethod(clazz));
-                }
-            }
-        }
-        this.handlerMethodMap = Collections.unmodifiableMap(handlerMethodMap);
-    }
-
-    /**
-     * 扫描类中包含RequestMapping映射的方法
-     *
-     * @param clazz
-     */
-    private Map<String, HandlerMethod> scanClassMethod(Class<?> clazz) {
-        Map<String, HandlerMethod> handlerMethodMap = new HashMap<>();
-        String prefixMappingUrl = URL_SEPARATOR;
-        RequestMapping classMapping = clazz.getAnnotation(RequestMapping.class);
-        if (null != classMapping) {
-            prefixMappingUrl = URL_SEPARATOR + classMapping.path().replaceFirst(URL_SEPARATOR, "");
-        }
-
-        //不支持继承的方法，不支持非public的方法
-        Method[] declaredMethods = clazz.getDeclaredMethods();
-        for (Method method : declaredMethods) {
-            RequestMapping requestMapping;
-            if (Modifier.isPublic(method.getModifiers())
-                    && null != (requestMapping = method.getAnnotation(RequestMapping.class))) {
-                String url = prefixMappingUrl + URL_SEPARATOR + requestMapping.path().replaceFirst(URL_SEPARATOR, "");
-
-                HandlerMethod handlerMethod = new HandlerMethod();
-                handlerMethod.setControlerClass(clazz);
-                handlerMethod.setMethod(method);
-                handlerMethodMap.put(url, handlerMethod);
-            }
-            //排除非public方法
-        }
-        return handlerMethodMap;
-    }
 }

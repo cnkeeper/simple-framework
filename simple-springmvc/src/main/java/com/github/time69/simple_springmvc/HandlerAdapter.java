@@ -1,5 +1,11 @@
 package com.github.time69.simple_springmvc;
 
+import com.github.time69.simple_springmvc.view.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * 描述~
  *
@@ -7,5 +13,8 @@ package com.github.time69.simple_springmvc;
  * @version 0.0.0
  * @date 2018/8/23
  */
-public class HandlerAdapter {
+public interface HandlerAdapter {
+    boolean supports(Handler handler);
+
+    ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws InvocationTargetException, IllegalAccessException;
 }
