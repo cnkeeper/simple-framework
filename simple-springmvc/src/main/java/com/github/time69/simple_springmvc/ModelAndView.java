@@ -1,4 +1,4 @@
-package com.github.time69.simple_springmvc.view;
+package com.github.time69.simple_springmvc;
 
 import com.github.time69.simple_springmvc.http.HttpStatus;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Data
 public class ModelAndView {
-    private Object view;
+    private View view;
     private Map<String,Object> modelMap;
     private HttpStatus status;
 }

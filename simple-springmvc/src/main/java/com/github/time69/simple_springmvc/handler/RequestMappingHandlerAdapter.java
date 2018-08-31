@@ -2,7 +2,7 @@ package com.github.time69.simple_springmvc.handler;
 
 import com.github.time69.simple_springmvc.Handler;
 import com.github.time69.simple_springmvc.HandlerAdapter;
-import com.github.time69.simple_springmvc.view.ModelAndView;
+import com.github.time69.simple_springmvc.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +52,12 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
             Object[] parameters = handlerMethod.getParameters();
 
             Object returnValue = method.invoke(beanInstance, parameters);
-
+            // TODO 函数返回值构建为ModelAndView
+            if(returnValue instanceof ModelAndView){
+                modelAndView = (ModelAndView) returnValue;
+            }else if(returnValue instanceof String){
+                modelAndView = new ModelAndView();
+            }
         }
         return modelAndView;
     }

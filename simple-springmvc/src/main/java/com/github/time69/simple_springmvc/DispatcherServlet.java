@@ -1,11 +1,10 @@
 package com.github.time69.simple_springmvc;
 
-import com.github.time69.simple_springmvc.handler.ApplicationContext;
+import com.github.time69.simple_springmvc.context.ApplicationContext;
 import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
 import com.github.time69.simple_springmvc.handler.RequestMappingHandlerMapping;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
-import com.github.time69.simple_springmvc.view.ModelAndView;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -28,6 +27,7 @@ public class DispatcherServlet extends HttpServlet {
     private static final String KEY_PACKAGENAMES = "packageNames";
     private List<HandlerMapping> handlerMappings;
     private List<HandlerAdapter> handlerAdapters;
+    private List<ViewResolver> viewResolverss;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -36,6 +36,7 @@ public class DispatcherServlet extends HttpServlet {
         ApplicationContext.initHandlerMethod(config.getInitParameter(KEY_PACKAGENAMES));
         initHandlerMapping();
         initHandlerAdapter();
+        initViewResolvers();
     }
 
     @Override
@@ -43,7 +44,7 @@ public class DispatcherServlet extends HttpServlet {
         try {
             doDispater(req, resp);
         } catch (Exception e) {
-
+            // TODO 异常处理
         }
 
         super.service(req, resp);
@@ -79,10 +80,6 @@ public class DispatcherServlet extends HttpServlet {
         return null;
     }
 
-    private void processDispatchResult(HttpServletResponse resp, ModelAndView modelAndView) {
-
-    }
-
     private HandlerAdapter getHandlerAdapter(Handler handler) {
         for (HandlerAdapter adapter : this.handlerAdapters) {
             if (adapter.supports(handler)) {
@@ -90,6 +87,10 @@ public class DispatcherServlet extends HttpServlet {
             }
         }
         return null;
+    }
+
+    private void processDispatchResult(HttpServletResponse resp, ModelAndView modelAndView) {
+//        resolveViewName(modelAndView.getView())
     }
 
     /**
@@ -107,4 +108,7 @@ public class DispatcherServlet extends HttpServlet {
         this.handlerAdapters = Collections.emptyList();
     }
 
+    private void initViewResolvers() {
+        this.viewResolverss = Collections.emptyList();
+    }
 }

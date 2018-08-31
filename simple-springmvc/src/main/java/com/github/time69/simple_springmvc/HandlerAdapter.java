@@ -1,7 +1,5 @@
 package com.github.time69.simple_springmvc;
 
-import com.github.time69.simple_springmvc.view.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;

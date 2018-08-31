@@ -1,7 +1,8 @@
-package com.github.time69.simple_springmvc.handler;
+package com.github.time69.simple_springmvc.context;
 
 import com.github.time69.simple_springmvc.annotation.Controller;
 import com.github.time69.simple_springmvc.annotation.RequestMapping;
+import com.github.time69.simple_springmvc.handler.HandlerMethod;
 import com.github.time69.simple_springmvc.util.ClassScan;
 import com.github.time69.simple_springmvc.util.StringUtils;
 
@@ -23,6 +24,12 @@ public final class ApplicationContext {
     private static final String URL_SEPARATOR = "/";
 
     public static Map<String, HandlerMethod> BEAN_HANDLER_METHOD_MAP;
+
+    private static Map<Class,List> container = Collections.emptyMap();
+
+    public static <T> List<T> getBean(Class<T> clazz){
+        return container.get(clazz);
+    }
 
     public static void initHandlerMethod(String packages) {
         Map<String, HandlerMethod> handlerMethodMap = new HashMap<>();
@@ -80,4 +87,6 @@ public final class ApplicationContext {
         }
         return handlerMethodMap;
     }
+
+
 }

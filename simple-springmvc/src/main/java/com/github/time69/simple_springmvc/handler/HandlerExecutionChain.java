@@ -4,7 +4,7 @@ import com.github.time69.simple_springmvc.Handler;
 import com.github.time69.simple_springmvc.HandlerInterceptor;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
-import com.github.time69.simple_springmvc.view.ModelAndView;
+import com.github.time69.simple_springmvc.ModelAndView;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
