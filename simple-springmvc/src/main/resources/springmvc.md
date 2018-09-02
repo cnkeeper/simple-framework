@@ -29,6 +29,7 @@ AbstractHandlerMethodMapping$MappingRegistry
 
 PathResourceResolver
 
+HandlerMethodArgumentResolver: 请求参数处理
 HandlerMethodReturnValueHandler: 返回值处理
 
 资源位置：
