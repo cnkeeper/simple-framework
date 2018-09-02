@@ -12,3 +12,4 @@ logs/
 */.svn/
 */.classpath
 target/*.iml
+*.iml
