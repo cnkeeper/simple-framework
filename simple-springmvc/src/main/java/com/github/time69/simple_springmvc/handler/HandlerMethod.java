@@ -17,6 +17,5 @@ public class HandlerMethod implements Handler{
     private Class<?> classType;
     private Object beanInstance;
     private Method method;
-    private Object[] parameters;
     private MethodParameter[] methodParameters;
 }

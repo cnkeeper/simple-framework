@@ -41,7 +41,6 @@ public final class ApplicationContext {
             throw new IllegalArgumentException("there is no packageNames found!");
 
 
-        List<Class> classesHasAnnotation = new LinkedList<>();
         for (String pack : packageNames) {
             Class<?>[] classes = ClassScan.scanPackage(pack);
             if (null == classes)
@@ -53,7 +52,7 @@ public final class ApplicationContext {
                 }
             }
         }
-        handlerMethodMap = Collections.unmodifiableMap(handlerMethodMap);
+        BEAN_HANDLER_METHOD_MAP = Collections.unmodifiableMap(handlerMethodMap);
     }
 
 

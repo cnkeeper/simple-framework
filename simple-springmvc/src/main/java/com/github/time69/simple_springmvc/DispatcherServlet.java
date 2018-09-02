@@ -42,15 +42,15 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            doDispater(req, resp);
+            doDispatcher(req, resp);
         } catch (Exception e) {
             // TODO 异常处理
         }
 
-        super.service(req, resp);
+//        super.service(req, resp);
     }
 
-    private void doDispater(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    private void doDispatcher(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         HandlerExecutionChain executionChain = getHandlerExecutionChain(req);
         HandlerAdapter handlerAdapter = getHandlerAdapter(executionChain.getHandler());
 
@@ -60,13 +60,20 @@ public class DispatcherServlet extends HttpServlet {
             return;
         }
 
-        ModelAndView modelAndView = handlerAdapter.handler(req, resp, executionChain.getHandler());
+        ModelAndView modelAndView = null;
+        Exception ex = null;
 
-        //后置拦截
-        executionChain.applyPostHandler(req, resp, modelAndView);
+        try {
+            //请求处理
+            modelAndView = handlerAdapter.handler(req, resp, executionChain.getHandler());
 
+            //后置拦截
+            executionChain.applyPostHandler(req, resp, modelAndView);
+        } catch (Exception e) {
+            ex = e;
+        }
         // TODO 解析处理结果
-        processDispatchResult(resp, modelAndView);
+        processDispatchResult(req, resp, modelAndView,ex);
     }
 
     private HandlerExecutionChain getHandlerExecutionChain(HttpServletRequest req) {
@@ -76,7 +83,6 @@ public class DispatcherServlet extends HttpServlet {
                 return handlerChain;
             }
         }
-
         return null;
     }
 
@@ -89,8 +95,43 @@ public class DispatcherServlet extends HttpServlet {
         return null;
     }
 
-    private void processDispatchResult(HttpServletResponse resp, ModelAndView modelAndView) {
-//        resolveViewName(modelAndView.getView())
+    private void processDispatchResult(HttpServletRequest req, HttpServletResponse resp, ModelAndView modelAndView, Exception ex) throws Exception {
+        View view = null;
+
+        if(null != ex){
+            // TODO 发成异常，异常处理器
+        }
+
+        if (modelAndView.isReference()) {
+            //需要映射到真实的视图上
+            view = resolveViewName(modelAndView.getViewName());
+            if (null == view)
+                throw new ServletException(String.format("ModelAndView[%s] not contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));
+        } else {
+            //不需要映射，本身已经包含视图
+            view = modelAndView.getView();
+            if (null == view)
+                throw new ServletException(String.format("ModelAndView[%s] neither contains View nor contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));
+        }
+
+        view.render(modelAndView.getModelMap(), req, resp);
+    }
+
+    /**
+     * 视图解析获取视图
+     *
+     * @param viewName
+     * @return
+     */
+    private View resolveViewName(String viewName) {
+        View view = null;
+        for (ViewResolver viewResolver : this.viewResolverss) {
+            view = viewResolver.resolveView(viewName);
+            if (null != view) {
+                break;
+            }
+        }
+        return view;
     }
 
     /**
