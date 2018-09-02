@@ -2,7 +2,7 @@ package com.github.time69.simple_springmvc;
 
 import com.github.time69.simple_springmvc.context.ApplicationContext;
 import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
-import com.github.time69.simple_springmvc.handler.RequestMappingHandlerMapping;
+import com.github.time69.simple_springmvc.handler.mapping.RequestMappingHandlerMapping;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
 

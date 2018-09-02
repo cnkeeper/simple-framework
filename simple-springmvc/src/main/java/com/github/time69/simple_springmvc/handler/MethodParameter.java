@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class MethodParameter {
-    private Class<?> paramterType;
+    private Class<?> parameterType;
     private int index;
     private String name;
 }

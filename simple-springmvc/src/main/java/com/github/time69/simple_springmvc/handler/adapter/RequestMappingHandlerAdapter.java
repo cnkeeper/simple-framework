@@ -1,8 +1,9 @@
-package com.github.time69.simple_springmvc.handler;
+package com.github.time69.simple_springmvc.handler.adapter;
 
 import com.github.time69.simple_springmvc.Handler;
 import com.github.time69.simple_springmvc.HandlerAdapter;
 import com.github.time69.simple_springmvc.ModelAndView;
+import com.github.time69.simple_springmvc.handler.HandlerMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,8 +50,9 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
             Object beanInstance = handlerMethod.getBeanInstance();
-            Object[] parameters = handlerMethod.getParameters();
 
+            // TODO 自动封装参数
+            Object[] parameters = getMethodArgumentValues(request,handler);
             Object returnValue = method.invoke(beanInstance, parameters);
             // TODO 函数返回值构建为ModelAndView
             if(returnValue instanceof ModelAndView){
@@ -60,6 +62,11 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
             }
         }
         return modelAndView;
+    }
+
+    private Object[] getMethodArgumentValues(HttpServletRequest request, Handler handler) {
+        // resolverMethodArguments
+        return null;
     }
 
 

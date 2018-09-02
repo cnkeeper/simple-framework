@@ -1,4 +1,4 @@
-package com.github.time69.simple_springmvc.handler;
+package com.github.time69.simple_springmvc.handler.mapping;
 
 import com.github.time69.simple_springmvc.HandlerMapping;
 
