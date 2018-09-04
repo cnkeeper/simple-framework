@@ -80,12 +80,4 @@ public class UrlResourceViewResolver implements ViewResolver {
     public int getOrder() {
         return 0;
     }
-
-    public static void main(String[] args) {
-        UrlResourceViewResolver resourceViewResolver = new UrlResourceViewResolver();
-
-        String resource = resourceViewResolver.lookupPath("index");
-
-        System.out.println(resource);
-    }
 }

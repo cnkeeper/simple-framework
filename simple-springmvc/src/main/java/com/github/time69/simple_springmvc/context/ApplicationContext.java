@@ -110,11 +110,4 @@ public final class ApplicationContext {
 
         container = Collections.unmodifiableMap(container);
     }
-
-    public static void main(String[] args) {
-        Map<Object, Object> map = Collections.emptyMap();
-        map.put("key","value");
-        System.out.println(map);
-    }
-
 }
