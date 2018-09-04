@@ -1,5 +1,6 @@
-package com.github.time69.simple_springmvc.handler.mapping;
+package com.github.time69.simple_springmvc.handler.support.mapping;
 
+import com.github.time69.simple_springmvc.HandlerInterceptor;
 import com.github.time69.simple_springmvc.HandlerMapping;
 
 /**
@@ -10,5 +11,5 @@ import com.github.time69.simple_springmvc.HandlerMapping;
  * @date 2018/8/23
  */
 public abstract class AbstractHandlerMapping implements HandlerMapping {
-
+    protected HandlerInterceptor[] handlerInterceptors;
 }

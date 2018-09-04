@@ -108,7 +108,7 @@ public final class JettyFactory {
     public static ResourceHandler createResourceHandler(String resourceBase) {
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(false);
-        resourceHandler.setWelcomeFiles(new String[]{"index.html", "index.jsp"});
+        resourceHandler.setWelcomeFiles(new String[]{"static/index.html", "index.jsp"});
         resourceHandler.setResourceBase(resourceBase);
         return resourceHandler;
     }

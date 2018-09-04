@@ -2,7 +2,7 @@ package com.github.time69.simple_springmvc;
 
 import com.github.time69.simple_springmvc.context.ApplicationContext;
 import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
-import com.github.time69.simple_springmvc.handler.mapping.RequestMappingHandlerMapping;
+import com.github.time69.simple_springmvc.handler.support.mapping.RequestMappingHandlerMapping;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
 
@@ -50,8 +50,24 @@ public class DispatcherServlet extends HttpServlet {
 //        super.service(req, resp);
     }
 
+    /**
+     * <ul>
+     * <li>1. 拦截请求</li>
+     * <li>2. 查找处理器</li>
+     * <li>3. 处理器处理，获取结果</li>
+     * <li>4. 解析视图，获取视图</li>
+     * <li>5. 绑定数据模型</li>
+     * </ul>
+     *
+     * @param req
+     * @param resp
+     * @throws Exception
+     */
     private void doDispatcher(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+        //查找适配处理器
         HandlerExecutionChain executionChain = getHandlerExecutionChain(req);
+
+        //查找适配的处理器执行器
         HandlerAdapter handlerAdapter = getHandlerAdapter(executionChain.getHandler());
 
         //前置拦截
@@ -73,12 +89,12 @@ public class DispatcherServlet extends HttpServlet {
             ex = e;
         }
         // TODO 解析处理结果
-        processDispatchResult(req, resp, modelAndView,ex);
+        processDispatchResult(req, resp, modelAndView, ex);
     }
 
     private HandlerExecutionChain getHandlerExecutionChain(HttpServletRequest req) {
         for (HandlerMapping handlerMapping : this.handlerMappings) {
-            HandlerExecutionChain handlerChain = handlerMapping.getHander(req);
+            HandlerExecutionChain handlerChain = handlerMapping.getHandler(req);
             if (null != handlerChain) {
                 return handlerChain;
             }
@@ -95,15 +111,17 @@ public class DispatcherServlet extends HttpServlet {
         return null;
     }
 
-    private void processDispatchResult(HttpServletRequest req, HttpServletResponse resp, ModelAndView modelAndView, Exception ex) throws Exception {
-        View view = null;
+    private void processDispatchResult(HttpServletRequest req, HttpServletResponse resp, ModelAndView modelAndView, Exception dispatchException) throws Exception {
+        if (null == modelAndView)
+            return;
 
-        if(null != ex){
+        View view = null;
+        if (null != dispatchException) {
             // TODO 发成异常，异常处理器
         }
 
         if (modelAndView.isReference()) {
-            //需要映射到真实的视图上
+            //需要映射到真实的视图上, 此时的View实质上是String
             view = resolveViewName(modelAndView.getViewName());
             if (null == view)
                 throw new ServletException(String.format("ModelAndView[%s] not contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));

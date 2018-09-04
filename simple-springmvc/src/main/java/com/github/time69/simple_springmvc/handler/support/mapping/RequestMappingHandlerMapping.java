@@ -1,16 +1,16 @@
-package com.github.time69.simple_springmvc.handler.mapping;
+package com.github.time69.simple_springmvc.handler.support.mapping;
 
 import com.github.time69.simple_springmvc.HandlerInterceptor;
 import com.github.time69.simple_springmvc.context.ApplicationContext;
 import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
-import com.github.time69.simple_springmvc.handler.HandlerMethod;
+import com.github.time69.simple_springmvc.handler.MethodHandler;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * 描述~
+ * 描述: for RequestMapping
  *
  * @author <a href="1348555156@qq.com">LeiLi.Zhang</a>
  * @version 0.0.0
@@ -19,26 +19,28 @@ import java.util.Map;
 @Data
 public class RequestMappingHandlerMapping extends AbstractHandlerMapping {
 
-    private Map<String, HandlerMethod> handlerMethodMap;
-    private HandlerInterceptor[] handlerInterceptors;
+    private Map<String, MethodHandler> handlerMethodMap;
 
     public RequestMappingHandlerMapping() {
         this.handlerMethodMap = ApplicationContext.BEAN_HANDLER_METHOD_MAP;
     }
 
     @Override
-    public HandlerExecutionChain getHander(HttpServletRequest httpServletRequest) {
-        HandlerMethod handler = getHandlerMethod(httpServletRequest);
+    public HandlerExecutionChain getHandler(HttpServletRequest httpServletRequest) {
+        MethodHandler handler = getHandlerMethod(httpServletRequest);
+        if (null == handler)
+            return null;
+
         HandlerExecutionChain chain = new HandlerExecutionChain();
         chain.setHandler(handler);
-        for(HandlerInterceptor interceptor:handlerInterceptors){
+        for (HandlerInterceptor interceptor : handlerInterceptors) {
             // if match
             chain.addInterceptor(interceptor);
         }
         return chain;
     }
 
-    private HandlerMethod getHandlerMethod(HttpServletRequest httpServletRequest) {
+    private MethodHandler getHandlerMethod(HttpServletRequest httpServletRequest) {
         String pathInfo = httpServletRequest.getPathInfo();
         return this.handlerMethodMap.get(pathInfo);
     }

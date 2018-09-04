@@ -16,11 +16,12 @@ import java.util.Map;
  * @version 0.0.0
  * @date 2018/9/2
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class RedirectView implements View {
-    private String url;
+public class RedirectView extends AbstractUrlView {
+
+    public RedirectView(String url, String contentType) {
+        this.url = url;
+        this.contentType = contentType;
+    }
 
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {

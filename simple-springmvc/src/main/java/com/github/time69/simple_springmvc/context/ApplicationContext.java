@@ -1,8 +1,14 @@
 package com.github.time69.simple_springmvc.context;
 
+import com.github.time69.simple_springmvc.HandlerAdapter;
+import com.github.time69.simple_springmvc.HandlerMapping;
 import com.github.time69.simple_springmvc.annotation.Controller;
 import com.github.time69.simple_springmvc.annotation.RequestMapping;
-import com.github.time69.simple_springmvc.handler.HandlerMethod;
+import com.github.time69.simple_springmvc.handler.MethodHandler;
+import com.github.time69.simple_springmvc.handler.support.adapter.RequestMappingHandlerAdapter;
+import com.github.time69.simple_springmvc.handler.support.adapter.UrlResourceHandlerAdapter;
+import com.github.time69.simple_springmvc.handler.support.mapping.RequestMappingHandlerMapping;
+import com.github.time69.simple_springmvc.handler.support.mapping.UrlResourceHandlerMapping;
 import com.github.time69.simple_springmvc.util.ClassScan;
 import com.github.time69.simple_springmvc.util.StringUtils;
 
@@ -23,16 +29,20 @@ public final class ApplicationContext {
 
     private static final String URL_SEPARATOR = "/";
 
-    public static Map<String, HandlerMethod> BEAN_HANDLER_METHOD_MAP;
+    public static Map<String, MethodHandler> BEAN_HANDLER_METHOD_MAP;
 
-    private static Map<Class,List> container = Collections.emptyMap();
+    private static Map<Class,List> container = new HashMap<>();
 
     public static <T> List<T> getBean(Class<T> clazz){
         return container.get(clazz);
     }
 
+    static {
+        refresh();
+    }
+
     public static void initHandlerMethod(String packages) {
-        Map<String, HandlerMethod> handlerMethodMap = new HashMap<>();
+        Map<String, MethodHandler> handlerMethodMap = new HashMap<>();
         if (!StringUtils.isNotBlank(packages))
             throw new IllegalArgumentException("there is no packageNames found!");
 
@@ -61,8 +71,8 @@ public final class ApplicationContext {
      *
      * @param clazz
      */
-    private static Map<String, HandlerMethod> scanClassMethod(Class<?> clazz) {
-        Map<String, HandlerMethod> handlerMethodMap = new HashMap<>();
+    private static Map<String, MethodHandler> scanClassMethod(Class<?> clazz) {
+        Map<String, MethodHandler> handlerMethodMap = new HashMap<>();
         String prefixMappingUrl = URL_SEPARATOR;
         RequestMapping classMapping = clazz.getAnnotation(RequestMapping.class);
         if (null != classMapping) {
@@ -77,15 +87,34 @@ public final class ApplicationContext {
                     && null != (requestMapping = method.getAnnotation(RequestMapping.class))) {
                 String url = prefixMappingUrl + URL_SEPARATOR + requestMapping.path().replaceFirst(URL_SEPARATOR, "");
 
-                HandlerMethod handlerMethod = new HandlerMethod();
-                handlerMethod.setClassType(clazz);
-                handlerMethod.setMethod(method);
-                handlerMethodMap.put(url, handlerMethod);
+                MethodHandler methodHandler = new MethodHandler();
+                methodHandler.setClassType(clazz);
+                methodHandler.setMethod(method);
+                handlerMethodMap.put(url, methodHandler);
             }
             //排除非public方法
         }
         return handlerMethodMap;
     }
 
+    public static void refresh(){
+        List<HandlerMapping> handlerMappingList = new ArrayList();
+        handlerMappingList.add(new RequestMappingHandlerMapping());
+        handlerMappingList.add(new UrlResourceHandlerMapping());
+        container.put(HandlerMapping.class,handlerMappingList);
+
+        List<HandlerAdapter> handlerAdapterList = new ArrayList<>();
+        handlerAdapterList.add(new RequestMappingHandlerAdapter());
+        handlerAdapterList.add(new UrlResourceHandlerAdapter());
+        container.put(HandlerAdapter.class,handlerAdapterList);
+
+        container = Collections.unmodifiableMap(container);
+    }
+
+    public static void main(String[] args) {
+        Map<Object, Object> map = Collections.emptyMap();
+        map.put("key","value");
+        System.out.println(map);
+    }
 
 }

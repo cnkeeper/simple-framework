@@ -5,7 +5,9 @@ import com.github.time69.simple_springmvc.HandlerInterceptor;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
 import com.github.time69.simple_springmvc.ModelAndView;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +15,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 描述: 拦截器链
+ * 描述:
  *
  * @author <a href="1348555156@qq.com">LeiLi.Zhang</a>
  * @version 0.0.0
  * @date 2018/8/23
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HandlerExecutionChain {
     private static Logger LOGGER = LoggerContext.getLog(HandlerExecutionChain.class);
     //实际处理的对象，其实就是controller中的method

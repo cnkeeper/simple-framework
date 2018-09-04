@@ -1,9 +1,9 @@
-package com.github.time69.simple_springmvc.handler.adapter;
+package com.github.time69.simple_springmvc.handler.support.adapter;
 
 import com.github.time69.simple_springmvc.Handler;
 import com.github.time69.simple_springmvc.HandlerAdapter;
 import com.github.time69.simple_springmvc.ModelAndView;
-import com.github.time69.simple_springmvc.handler.HandlerMethod;
+import com.github.time69.simple_springmvc.handler.MethodHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 public class RequestMappingHandlerAdapter implements HandlerAdapter {
     @Override
     public boolean supports(Handler handler) {
-        return (handler instanceof HandlerMethod);
+        return (handler instanceof MethodHandler);
     }
 
     @Override
@@ -46,10 +46,10 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
 
     private ModelAndView invokeMethod(HttpServletRequest request, Handler handler) throws InvocationTargetException, IllegalAccessException {
         ModelAndView modelAndView = null;
-        if (handler instanceof HandlerMethod) {
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-            Object beanInstance = handlerMethod.getBeanInstance();
+        if (handler instanceof MethodHandler) {
+            MethodHandler methodHandler = (MethodHandler) handler;
+            Method method = methodHandler.getMethod();
+            Object beanInstance = methodHandler.getBeanInstance();
 
             // TODO 自动封装参数
             Object[] parameters = getMethodArgumentValues(request,handler);
