@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -28,6 +29,7 @@ public class RedirectView extends AbstractUrlView {
         sendRedirect(request, response, model);
     }
 
-    private void sendRedirect(HttpServletRequest request, HttpServletResponse response, Map<String, ?> model) {
+    private void sendRedirect(HttpServletRequest request, HttpServletResponse response, Map<String, ?> model) throws IOException {
+        response.sendRedirect(url);
     }
 }

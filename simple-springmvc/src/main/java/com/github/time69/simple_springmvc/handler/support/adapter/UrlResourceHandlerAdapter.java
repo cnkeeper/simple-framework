@@ -24,6 +24,8 @@ public class UrlResourceHandlerAdapter implements HandlerAdapter {
 
     @Override
     public ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws InvocationTargetException, IllegalAccessException {
+        //静态资源直接处理返回响应
+        ((UrlResourceHandler)handler).handle(request,response);
         return null;
     }
 }

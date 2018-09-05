@@ -23,5 +23,6 @@ public class ForwardView extends AbstractUrlView {
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        request.getRequestDispatcher(url).forward(request,response);
     }
 }

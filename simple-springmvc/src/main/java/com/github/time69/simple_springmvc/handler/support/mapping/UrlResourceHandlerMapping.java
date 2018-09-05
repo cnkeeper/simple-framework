@@ -1,6 +1,7 @@
 package com.github.time69.simple_springmvc.handler.support.mapping;
 
 import com.github.time69.simple_springmvc.HandlerInterceptor;
+import com.github.time69.simple_springmvc.HandlerMapping;
 import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
 import com.github.time69.simple_springmvc.handler.UrlResourceHandler;
 
@@ -8,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 描述: for 静态资源
- * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping, org.springframework.web.servlet.handler.SimpleUrlHandlerMapping
+ * @see org.springframework.web.servlet.handler.AbstractUrlHandlerMapping
+ * @see org.springframework.web.servlet.handler.SimpleUrlHandlerMapping
  * @author <a href="1348555156@qq.com">LeiLi.Zhang</a>
  * @version 0.0.0
  * @date 2018/9/3
@@ -34,6 +36,7 @@ public class UrlResourceHandlerMapping extends AbstractHandlerMapping{
         String resourcePath = requestURI.replaceFirst(contextPath, "");
 
 
+        httpServletRequest.setAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE,"");
         return null;
     }
 }
