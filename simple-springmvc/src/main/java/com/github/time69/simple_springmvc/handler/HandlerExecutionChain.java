@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class HandlerExecutionChain {
     private static Logger LOGGER = LoggerContext.getLog(HandlerExecutionChain.class);
     //实际处理的对象，其实就是controller中的method
     private Handler handler;
-    private List<HandlerInterceptor> handlerInterceptors = Collections.emptyList();
+    private List<HandlerInterceptor> handlerInterceptors = new ArrayList<>(0);
 
     public void addInterceptor(HandlerInterceptor interceptor) {
         this.handlerInterceptors.add(interceptor);
@@ -38,7 +39,7 @@ public class HandlerExecutionChain {
         boolean preResult = true;
         for (HandlerInterceptor interceptor : handlerInterceptors) {
             try {
-                preResult = interceptor.preHandler(request, response);
+                preResult = interceptor.preHandler(request, response,handler);
             } catch (Exception e) {
                 LOGGER.error("Exception in executing interceptor[{}], cause by{}", interceptor, e);
                 preResult = false;
@@ -51,9 +52,10 @@ public class HandlerExecutionChain {
     }
 
     public void applyPostHandler(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
+
         for (HandlerInterceptor interceptor : handlerInterceptors) {
             try {
-                interceptor.postHandler(request, response, modelAndView);
+                interceptor.postHandler(request, response, handler,modelAndView);
             } catch (Exception e) {
                 LOGGER.error("Exception in executing interceptor[{}], cause by{}", interceptor, e);
                 return;

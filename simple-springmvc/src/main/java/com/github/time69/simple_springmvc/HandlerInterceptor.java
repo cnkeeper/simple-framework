@@ -16,7 +16,7 @@ public interface HandlerInterceptor {
      * @param response
      * @return true:继续执行拦截器链; false:终止执行拦截器链
      */
-    boolean preHandler(HttpServletRequest httpServletRequest, HttpServletResponse response) throws Exception;
+    boolean preHandler(HttpServletRequest httpServletRequest, HttpServletResponse response, Handler handler) throws Exception;
 
-    boolean postHandler(HttpServletRequest httpServletRequest, HttpServletResponse response, ModelAndView modelAndView) throws Exception;
+    boolean postHandler(HttpServletRequest httpServletRequest, HttpServletResponse response, Handler handler, ModelAndView modelAndView) throws Exception;
 }
