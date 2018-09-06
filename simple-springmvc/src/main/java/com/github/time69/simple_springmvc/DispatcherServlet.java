@@ -4,6 +4,7 @@ import com.github.time69.simple_springmvc.context.ApplicationContext;
 import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
+import com.github.time69.simple_springmvc.resolver.view.ViewResolver;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

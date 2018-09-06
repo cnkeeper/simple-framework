@@ -1,9 +1,6 @@
-package com.github.time69.simple_springmvc.resolver;
+package com.github.time69.simple_springmvc.resolver.view;
 
 import com.github.time69.simple_springmvc.View;
-import com.github.time69.simple_springmvc.ViewResolver;
-import com.github.time69.simple_springmvc.logger.Logger;
-import com.github.time69.simple_springmvc.logger.LoggerContext;
 import com.github.time69.simple_springmvc.view.ForwardView;
 import com.github.time69.simple_springmvc.view.RedirectView;
 import lombok.Data;
@@ -39,8 +36,9 @@ public class UrlResourceViewResolver implements ViewResolver {
     public View resolveView(String viewName) {
         View view = null;
 
-        // TODO 在静态资源目录中查找视图
-        String lookPath = lookupPath(viewName);
+        // 在静态资源目录中查找视图
+        String path = prefix + File.separator+viewName + stuff;
+        String lookPath = lookupPath(path);
         if (null == lookPath)
             return view;
 
@@ -61,16 +59,14 @@ public class UrlResourceViewResolver implements ViewResolver {
     /**
      * TODO 在静态资源目录中查找视图
      *
-     * @param viewName
+     * @param path
      * @return
      */
-    private String lookupPath(String viewName) {
-        for (String path : staticPath) {
-            path += prefix + File.separator+viewName + stuff;
-            System.out.println("path:"+path);
+    public String lookupPath(String path) {
+        for (String p : staticPath) {
             URL resource = this.getClass().getClassLoader().getResource(path);
             if (resource != null) {
-                return viewName + stuff;
+                return path;
             }
         }
         return null;
