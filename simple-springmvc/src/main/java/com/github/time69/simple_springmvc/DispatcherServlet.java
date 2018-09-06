@@ -2,7 +2,6 @@ package com.github.time69.simple_springmvc;
 
 import com.github.time69.simple_springmvc.context.ApplicationContext;
 import com.github.time69.simple_springmvc.handler.HandlerExecutionChain;
-import com.github.time69.simple_springmvc.handler.support.mapping.RequestMappingHandlerMapping;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
 
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,8 +45,6 @@ public class DispatcherServlet extends HttpServlet {
         } catch (Exception e) {
             // TODO 异常处理
         }
-
-//        super.service(req, resp);
     }
 
     /**
@@ -72,7 +69,7 @@ public class DispatcherServlet extends HttpServlet {
 
         //前置拦截
         if (!executionChain.applyPreHandler(req, resp)) {
-            //拦截器拦截，不继续处理
+            //拦截器已经拦截处理，不继续执行
             return;
         }
 
@@ -86,9 +83,10 @@ public class DispatcherServlet extends HttpServlet {
             //后置拦截
             executionChain.applyPostHandler(req, resp, modelAndView);
         } catch (Exception e) {
+            LOGGER.error("doDispatcher has error, occur by{}", e);
             ex = e;
         }
-        // TODO 解析处理结果
+        //解析处理结果
         processDispatchResult(req, resp, modelAndView, ex);
     }
 
@@ -112,6 +110,7 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     private void processDispatchResult(HttpServletRequest req, HttpServletResponse resp, ModelAndView modelAndView, Exception dispatchException) throws Exception {
+        //有可能是@ResponseBody，在执行器处理时就已经返回，此时view为空，不需要视图解析
         if (null == modelAndView)
             return;
 
@@ -121,7 +120,7 @@ public class DispatcherServlet extends HttpServlet {
         }
 
         if (modelAndView.isReference()) {
-            //需要映射到真实的视图上, 此时的View实质上是String
+            //视图解析，需要映射到真实的视图上, 此时的View实质上是String
             view = resolveViewName(modelAndView.getViewName());
             if (null == view)
                 throw new ServletException(String.format("ModelAndView[%s] not contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));
@@ -153,21 +152,31 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     /**
-     * TODO 初始化加载handlerMappings
+     * 初始化加载handlerMappings
      */
     private void initHandlerMapping() {
-        this.handlerMappings = Collections.emptyList();
-        this.handlerMappings.add(new RequestMappingHandlerMapping());
+        this.handlerMappings = new ArrayList<>(0);
+        List<HandlerMapping> handlerMappingList = ApplicationContext.getBean(HandlerMapping.class);
+        if (null != handlerMappingList)
+            this.handlerMappings.addAll(ApplicationContext.getBean(HandlerMapping.class));
     }
 
     /**
      * 初始化加载handlerAdapters
      */
     private void initHandlerAdapter() {
-        this.handlerAdapters = Collections.emptyList();
+        this.handlerAdapters = new ArrayList<>(0);
+        List<HandlerAdapter> handlerAdapterList = ApplicationContext.getBean(HandlerAdapter.class);
+        if (handlerAdapterList != null) {
+            this.handlerAdapters.addAll(handlerAdapterList);
+        }
     }
 
     private void initViewResolvers() {
-        this.viewResolverss = Collections.emptyList();
+        this.viewResolverss = new ArrayList<>(0);
+        List<ViewResolver> viewResolverList = ApplicationContext.getBean(ViewResolver.class);
+        if (viewResolverList != null) {
+            this.viewResolverss.addAll(viewResolverList);
+        }
     }
 }
