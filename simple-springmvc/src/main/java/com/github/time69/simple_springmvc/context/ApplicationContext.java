@@ -42,19 +42,22 @@ public final class ApplicationContext {
     }
 
     public static void initHandlerMethod(String packages) {
-        Map<String, MethodHandler> handlerMethodMap = new HashMap<>();
-        if (!StringUtils.isNotBlank(packages))
+        Map<String, MethodHandler> handlerMethodMap = new HashMap<>(0);
+        if (!StringUtils.isNotBlank(packages)) {
             throw new IllegalArgumentException("there is no packageNames found!");
+        }
 
         String[] packageNames = packages.split(PACKAGE_SEPARATOR);
-        if (packageNames == null || packageNames.length < 1)
+        if (packageNames == null || packageNames.length < 1) {
             throw new IllegalArgumentException("there is no packageNames found!");
+        }
 
 
         for (String pack : packageNames) {
             Class<?>[] classes = ClassScan.scanPackage(pack);
-            if (null == classes)
+            if (null == classes) {
                 continue;
+            }
 
             for (Class<?> clazz : classes) {
                 if (null != clazz.getAnnotation(Controller.class)) {
@@ -72,7 +75,7 @@ public final class ApplicationContext {
      * @param clazz
      */
     private static Map<String, MethodHandler> scanClassMethod(Class<?> clazz) {
-        Map<String, MethodHandler> handlerMethodMap = new HashMap<>();
+        Map<String, MethodHandler> handlerMethodMap = new HashMap<>(0);
         String prefixMappingUrl = URL_SEPARATOR;
         RequestMapping classMapping = clazz.getAnnotation(RequestMapping.class);
         if (null != classMapping) {

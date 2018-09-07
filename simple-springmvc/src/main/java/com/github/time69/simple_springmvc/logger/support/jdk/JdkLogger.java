@@ -11,11 +11,11 @@ import java.util.logging.Level;
  * @version 0.0.0
  * @date 2018/8/27
  */
-class JDKLogger implements Logger {
+class JdkLogger implements Logger {
 
     private java.util.logging.Logger logger;
 
-    public JDKLogger(java.util.logging.Logger logger) {
+    public JdkLogger(java.util.logging.Logger logger) {
         this.logger = logger;
     }
 

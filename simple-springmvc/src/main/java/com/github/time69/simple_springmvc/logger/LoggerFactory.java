@@ -9,7 +9,17 @@ package com.github.time69.simple_springmvc.logger;
  */
 public interface LoggerFactory {
 
+    /**
+     * get logger by name
+     * @param name
+     * @return
+     */
     Logger getLog(String name);
 
+    /**
+     * get logger by class
+     * @param clazz
+     * @return
+     */
     Logger getLog(Class<?> clazz);
 }

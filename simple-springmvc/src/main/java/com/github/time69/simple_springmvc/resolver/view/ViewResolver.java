@@ -11,5 +11,10 @@ import com.github.time69.simple_springmvc.View;
  * @date 2018/8/23
  */
 public interface ViewResolver extends Resolver {
+    /**
+     * 通过名称解析资源
+     * @param viewName
+     * @return
+     */
     View resolveView(String viewName);
 }

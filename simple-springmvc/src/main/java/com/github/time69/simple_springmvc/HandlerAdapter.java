@@ -12,7 +12,21 @@ import java.lang.reflect.InvocationTargetException;
  * @date 2018/8/23
  */
 public interface HandlerAdapter {
+    /**
+     * 执行器是否支持执行该处理器
+     * @param handler
+     * @return
+     */
     boolean supports(Handler handler);
 
+    /**
+     * 执行处理器
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws InvocationTargetException, IllegalAccessException;
 }

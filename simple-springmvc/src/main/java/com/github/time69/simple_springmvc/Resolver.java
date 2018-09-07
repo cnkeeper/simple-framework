@@ -8,5 +8,9 @@ package com.github.time69.simple_springmvc;
  * @date 2018/9/6
  */
 public interface Resolver {
+    /**
+     * 返回顺序号，顺序号用户标识其加载顺序
+     * @return
+     */
     int getOrder();
 }
