@@ -10,15 +10,15 @@ import com.github.time69.simple_springmvc.logger.AbstractLoggerFactory;
  * @version 0.0.0
  * @date 2018/8/27
  */
-public class Log4JLoggerFactory extends AbstractLoggerFactory {
+public class Log4jLoggerFactory extends AbstractLoggerFactory {
 
     @Override
     protected Logger createLog(String name) {
-        return new Log4JLogger(org.apache.log4j.Logger.getLogger(name));
+        return new Log4jLogger(org.apache.log4j.Logger.getLogger(name));
     }
 
     @Override
     protected Logger createLog(Class<?> clazz) {
-        return new Log4JLogger(org.apache.log4j.Logger.getLogger(clazz));
+        return new Log4jLogger(org.apache.log4j.Logger.getLogger(clazz));
     }
 }

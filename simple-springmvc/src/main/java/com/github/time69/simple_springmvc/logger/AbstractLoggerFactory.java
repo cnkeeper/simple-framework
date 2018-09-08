@@ -19,8 +19,9 @@ public abstract class AbstractLoggerFactory implements LoggerFactory {
 
     @Override
     public Logger getLog(String name) {
-        if (null == name)
+        if (null == name) {
             throw new IllegalArgumentException("name should not be null!");
+        }
 
         Logger logger = LOGGER_CACHE.get(name);
         if (logger == null) {
@@ -33,8 +34,9 @@ public abstract class AbstractLoggerFactory implements LoggerFactory {
 
     @Override
     public Logger getLog(Class<?> clazz) {
-        if (null == clazz.getName())
+        if (null == clazz.getName()) {
             throw new IllegalArgumentException("name should not be null!");
+        }
 
         Logger logger = LOGGER_CACHE.get(clazz.getName());
         if (logger == null) {
@@ -44,7 +46,17 @@ public abstract class AbstractLoggerFactory implements LoggerFactory {
         return logger;
     }
 
+    /**
+     * 通过名称获取日志对象
+     * @param name
+     * @return
+     */
     protected abstract Logger createLog(String name);
 
+    /**
+     * 通过class获取日志对象
+     * @param clazz
+     * @return
+     */
     protected abstract Logger createLog(Class<?> clazz);
 }

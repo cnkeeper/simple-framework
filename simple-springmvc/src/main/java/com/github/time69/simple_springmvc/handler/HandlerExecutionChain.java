@@ -27,7 +27,9 @@ import java.util.List;
 @AllArgsConstructor
 public class HandlerExecutionChain {
     private static Logger LOGGER = LoggerContext.getLog(HandlerExecutionChain.class);
-    //实际处理的对象，其实就是controller中的method
+    /**
+     * 实际处理的对象，其实就是controller中的method
+     */
     private Handler handler;
     private List<HandlerInterceptor> handlerInterceptors = new ArrayList<>(0);
 
@@ -39,13 +41,14 @@ public class HandlerExecutionChain {
         boolean preResult = true;
         for (HandlerInterceptor interceptor : handlerInterceptors) {
             try {
-                preResult = interceptor.preHandler(request, response,handler);
+                preResult = interceptor.preHandler(request, response, handler);
             } catch (Exception e) {
                 LOGGER.error("Exception in executing interceptor[{}], cause by{}", interceptor, e);
                 preResult = false;
             }
-            if (!preResult)
+            if (!preResult) {
                 return false;
+            }
         }
 
         return preResult;
@@ -55,7 +58,7 @@ public class HandlerExecutionChain {
 
         for (HandlerInterceptor interceptor : handlerInterceptors) {
             try {
-                interceptor.postHandler(request, response, handler,modelAndView);
+                interceptor.postHandler(request, response, handler, modelAndView);
             } catch (Exception e) {
                 LOGGER.error("Exception in executing interceptor[{}], cause by{}", interceptor, e);
                 return;

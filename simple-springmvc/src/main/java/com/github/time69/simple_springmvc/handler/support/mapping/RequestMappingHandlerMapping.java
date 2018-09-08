@@ -28,8 +28,9 @@ public class RequestMappingHandlerMapping extends AbstractHandlerMapping {
     @Override
     public HandlerExecutionChain getHandler(HttpServletRequest httpServletRequest) {
         MethodHandler handler = getHandlerMethod(httpServletRequest);
-        if (null == handler)
+        if (null == handler) {
             return null;
+        }
 
         HandlerExecutionChain chain = new HandlerExecutionChain();
         chain.setHandler(handler);

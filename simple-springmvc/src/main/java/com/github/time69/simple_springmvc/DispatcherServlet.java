@@ -112,8 +112,9 @@ public class DispatcherServlet extends HttpServlet {
 
     private void processDispatchResult(HttpServletRequest req, HttpServletResponse resp, ModelAndView modelAndView, Exception dispatchException) throws Exception {
         //有可能是@ResponseBody，在执行器处理时就已经返回，此时view为空，不需要视图解析
-        if (null == modelAndView)
+        if (null == modelAndView) {
             return;
+        }
 
         View view = null;
         if (null != dispatchException) {
@@ -123,13 +124,15 @@ public class DispatcherServlet extends HttpServlet {
         if (modelAndView.isReference()) {
             //视图解析，需要映射到真实的视图上, 此时的View实质上是String
             view = resolveViewName(modelAndView.getViewName());
-            if (null == view)
+            if (null == view) {
                 throw new ServletException(String.format("ModelAndView[%s] not contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));
+            }
         } else {
             //不需要映射，本身已经包含视图
             view = modelAndView.getView();
-            if (null == view)
+            if (null == view) {
                 throw new ServletException(String.format("ModelAndView[%s] neither contains View nor contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));
+            }
         }
 
         view.render(modelAndView.getModelMap(), req, resp);
@@ -158,8 +161,9 @@ public class DispatcherServlet extends HttpServlet {
     private void initHandlerMapping() {
         this.handlerMappings = new ArrayList<>(0);
         List<HandlerMapping> handlerMappingList = ApplicationContext.getBean(HandlerMapping.class);
-        if (null != handlerMappingList)
+        if (null != handlerMappingList) {
             this.handlerMappings.addAll(ApplicationContext.getBean(HandlerMapping.class));
+        }
     }
 
     /**

@@ -15,6 +15,11 @@ public abstract class AbstractSupportResolver<T> implements Resolver {
         return 0;
     }
 
+    /**
+     * 当前解析器是否支持解析
+     * @param t
+     * @return
+     */
     abstract boolean support(T t);
 
 }

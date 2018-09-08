@@ -1,7 +1,5 @@
 package com.github.time69.simple_springmvc.http;
 
-import lombok.Data;
-
 /**
  * 描述~
  *
@@ -10,10 +8,25 @@ import lombok.Data;
  * @date 2018/8/30
  */
 public enum HttpStatus {
-    status_200(200, "OK"),
-    status_403(403,"403"),
-    status_404(404, "404"),
-    status_500(500, "500");
+
+    /**
+     * response status:200
+     */
+    STATUS_200(200, "OK"),
+
+    /**
+     * response status:200
+     */
+    STATUS_403(403,"403"),
+    /**
+     * response status:200
+     */
+    STATUS_404(404, "404"),
+    /**
+     * response status:200
+     */
+    STATUS_500(500, "500");
+
     private int status;
     private String desc;
 

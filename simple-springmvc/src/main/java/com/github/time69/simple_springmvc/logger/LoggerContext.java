@@ -1,7 +1,5 @@
 package com.github.time69.simple_springmvc.logger;
 
-import com.github.time69.simple_springmvc.logger.support.jdk.JDKLoggerFactory;
-
 /**
  * 描述~
  *
@@ -12,12 +10,12 @@ import com.github.time69.simple_springmvc.logger.support.jdk.JDKLoggerFactory;
 public final class LoggerContext {
     private static LoggerFactory loggerFactory;
 
-    private static final String[] log_impls = {
-        /*    "org.slf4j.LoggerFactory=SLF4JLoggerFactory",
+    private static final String[] LOG_IMPLS = {
+        /*    "org.slf4j.LoggerFactory=Slf4jLoggerFactory",
             "ch.qos.logback.classic.LoggerContext=LogBackLoggerFactory",*/
             "org.apache.logging.log4j.LogManager=Log4J2LoggerFactory",
-            "org.apache.log4j.Logger=Log4JLoggerFactory",
-            "java.util.logging.Logger=JDKLoggerFactory"
+            "org.apache.log4j.Logger=Log4jLoggerFactory",
+            "java.util.logging.Logger=JdkLoggerFactory"
     };
 
     static {
@@ -25,10 +23,10 @@ public final class LoggerContext {
     }
 
     private static void setLoggerImpl() {
-        for (int index = 0; index < log_impls.length; index++) {
+        for (int index = 0; index < LOG_IMPLS.length; index++) {
             try {
-                Class.forName(log_impls[index].split("=")[0]);
-                loggerFactory = (LoggerFactory) Class.forName(log_impls[index].split("=")[1]).newInstance();
+                Class.forName(LOG_IMPLS[index].split("=")[0]);
+                loggerFactory = (LoggerFactory) Class.forName(LOG_IMPLS[index].split("=")[1]).newInstance();
                 return;
             } catch (Exception e) {
                 // ignore

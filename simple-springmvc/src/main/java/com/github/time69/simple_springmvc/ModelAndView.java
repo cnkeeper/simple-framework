@@ -15,7 +15,9 @@ import java.util.Map;
  */
 @Data
 public class ModelAndView {
-    //视图，String or View
+    /**
+     * 视图，String or View
+     */
     private Object view;
     private Map<String, Object> modelMap;
     private HttpStatus status;

@@ -18,5 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 public interface HandlerMapping {
     String PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE = HandlerMapping.class.getName() + ".pathWithinHandlerMapping";
 
+    /**
+     * 查找处理器
+     * @param httpServletRequest
+     * @return
+     */
     HandlerExecutionChain getHandler(HttpServletRequest httpServletRequest);
 }
