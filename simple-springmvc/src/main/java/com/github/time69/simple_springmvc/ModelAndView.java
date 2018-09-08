@@ -26,6 +26,10 @@ public class ModelAndView {
         this.view = view;
     }
 
+    public void setViewName(String viewName) {
+        this.view = viewName;
+    }
+
     public View getView() {
         return (view instanceof View) ? (View) view : null;
     }

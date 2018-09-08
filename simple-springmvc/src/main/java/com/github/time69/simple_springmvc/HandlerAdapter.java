@@ -2,6 +2,7 @@ package com.github.time69.simple_springmvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -28,5 +29,5 @@ public interface HandlerAdapter {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws InvocationTargetException, IllegalAccessException;
+    ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws Exception;
 }

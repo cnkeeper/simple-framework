@@ -1,6 +1,7 @@
 package com.github.time69.simple_springmvc.annotation;
 
 import com.github.time69.simple_springmvc.http.HttpMethod;
+import com.github.time69.simple_springmvc.http.MediaType;
 
 import java.lang.annotation.*;
 
@@ -15,9 +16,29 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface RequestMapping {
-    /*路径*/
+    /**
+     * 路径
+     */
     String path();
 
-    /*请求方法*/
+    /**
+     * 支持的请求方法
+     *
+     * @return
+     */
     HttpMethod[] method() default {HttpMethod.GET, HttpMethod.POST};
+
+    /**
+     * 请求内容格式
+     *
+     * @return
+     */
+    MediaType consume() default MediaType.ALL;
+
+    /**
+     * 返回响应的内容格式
+     *
+     * @return
+     */
+    MediaType produce() default MediaType.ALL;
 }

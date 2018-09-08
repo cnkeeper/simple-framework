@@ -3,6 +3,7 @@ package com.github.time69.simple_springmvc.handler;
 import com.github.time69.simple_springmvc.Handler;
 import lombok.Data;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -19,4 +20,13 @@ public class MethodHandler implements Handler {
     private Object beanInstance;
     private Method method;
     private MethodParameter[] methodParameters;
+
+    public <T extends Annotation> T getAnnotation(Class<T> classType) {
+        T annotation = null;
+        if (null != method) {
+            annotation = method.getAnnotation(classType);
+        }
+        return annotation;
+    }
+
 }

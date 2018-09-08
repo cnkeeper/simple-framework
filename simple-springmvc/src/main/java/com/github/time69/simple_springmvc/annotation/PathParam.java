@@ -11,4 +11,18 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PathParam {
     String name() default "";
+
+    /**
+     * required=false, 时未找到匹配项时默认值
+     *
+     * @return
+     */
+    String defalutValue() default "";
+
+    /**
+     * 参数是否必须
+     *
+     * @return
+     */
+    boolean required() default true;
 }

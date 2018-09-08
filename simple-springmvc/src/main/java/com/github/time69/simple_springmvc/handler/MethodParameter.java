@@ -2,6 +2,8 @@ package com.github.time69.simple_springmvc.handler;
 
 import lombok.Data;
 
+import java.lang.reflect.Parameter;
+
 /**
  * 描述: 参数映射实体类
  *
@@ -12,6 +14,7 @@ import lombok.Data;
 @Data
 public class MethodParameter {
     private Class<?> parameterType;
+    private Parameter parameter;
     private int index;
     private String name;
 }

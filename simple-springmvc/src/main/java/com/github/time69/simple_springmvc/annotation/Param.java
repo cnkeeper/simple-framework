@@ -13,5 +13,15 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Param {
+    /**
+     * 参数映射key
+     * @return
+     */
     String name() default "";
+
+    /**
+     * 参数是否必须
+     * @return
+     */
+    boolean required() default true;
 }
