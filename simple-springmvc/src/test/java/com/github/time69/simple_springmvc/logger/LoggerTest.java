@@ -16,7 +16,7 @@ public class LoggerTest {
         Logger log = loggerFactory.getLog(LoggerTest.class);
         System.out.println(log);
 
-        log.error("hello");
+        log.error("hello {}","zhangsan ");
     }
 
 }

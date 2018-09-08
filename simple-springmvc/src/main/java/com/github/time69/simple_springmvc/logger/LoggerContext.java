@@ -11,11 +11,11 @@ public final class LoggerContext {
     private static LoggerFactory loggerFactory;
 
     private static final String[] LOG_IMPLS = {
-        /*    "org.slf4j.LoggerFactory=Slf4jLoggerFactory",
-            "ch.qos.logback.classic.LoggerContext=LogBackLoggerFactory",*/
-            "org.apache.logging.log4j.LogManager=Log4J2LoggerFactory",
-            "org.apache.log4j.Logger=Log4jLoggerFactory",
-            "java.util.logging.Logger=JdkLoggerFactory"
+//            "org.slf4j.LoggerFactory=com.github.time69.simple_springmvc.logger.support.slf4j.Slf4jLoggerFactory",
+//            "ch.qos.logback.classic.LoggerContext=com.github.time69.simple_springmvc.logger.support.logback.LogBackLoggerFactory",
+//            "org.apache.logging.log4j.LogManager=com.github.time69.simple_springmvc.logger.support.log4j2.Log4J2LoggerFactory",
+//            "org.apache.log4j.Logger=com.github.time69.simple_springmvc.logger.support.log4j.Log4jLoggerFactory",
+            "java.util.logging.Logger=com.github.time69.simple_springmvc.logger.support.jdk.JdkLoggerFactory"
     };
 
     static {
