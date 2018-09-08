@@ -7,6 +7,7 @@ import com.github.time69.simple_springmvc.handler.UrlResourceHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -23,7 +24,7 @@ public class UrlResourceHandlerAdapter implements HandlerAdapter {
     }
 
     @Override
-    public ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws InvocationTargetException, IllegalAccessException {
+    public ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws InvocationTargetException, IllegalAccessException, IOException {
         //静态资源直接处理返回响应
         ((UrlResourceHandler)handler).handle(request,response);
         return null;

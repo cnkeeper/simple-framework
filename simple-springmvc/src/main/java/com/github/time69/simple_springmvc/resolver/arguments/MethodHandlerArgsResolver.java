@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 0.0.0
  * @date 2018/9/6
  */
-public interface MethodArgsResolver extends Resolver {
+public interface MethodHandlerArgsResolver extends Resolver {
     boolean support(MethodParameter parameter);
-    Object[] handleMethodArgs(HttpServletRequest request, HttpServletResponse response, MethodHandler methodHandler);
+    Object[] handleArguments(HttpServletRequest request, HttpServletResponse response, MethodHandler methodHandler);
 }
