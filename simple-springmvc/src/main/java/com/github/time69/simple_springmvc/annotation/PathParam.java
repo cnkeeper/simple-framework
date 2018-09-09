@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PathParam {
-    String name() default "";
+    String name();
 
     /**
      * required=false, 时未找到匹配项时默认值

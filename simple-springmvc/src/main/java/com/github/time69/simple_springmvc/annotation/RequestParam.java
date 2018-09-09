@@ -17,7 +17,7 @@ public @interface RequestParam {
      * 参数映射key
      * @return
      */
-    String name() default "";
+    String name();
 
     /**
      * 参数是否必须
