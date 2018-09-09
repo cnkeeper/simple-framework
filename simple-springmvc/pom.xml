@@ -19,6 +19,7 @@
         <log4j.version>1.2.17</log4j.version>
         <log4j2.version>2.10.0</log4j2.version>
         <commons-logging.version>1.2</commons-logging.version>
+        <jackson.version>2.9.1</jackson.version>
         <lombok.version>1.18.0</lombok.version>
     </properties>
     <dependencies>
@@ -144,6 +145,17 @@
             <version>RELEASE</version>
         </dependency>
 
+        <!-- jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
