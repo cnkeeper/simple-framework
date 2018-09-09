@@ -5,6 +5,7 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import javax.servlet.DispatcherType;
@@ -142,7 +143,8 @@ public final class JettyFactory {
         return context;
     }
 
-    public static WebAppContext createWebAppContextHandler(String contextPath, String resourceBase, Map<Class<? extends Servlet>, String>... servletS) {
+
+    public static WebAppContext createWebAppContextHandler(String contextPath, String resourceBase, Map<String, ServletHolder>... servletS) {
         WebAppContext webAppContext = new WebAppContext();
 
         webAppContext.setContextPath(contextPath);
@@ -150,8 +152,8 @@ public final class JettyFactory {
 
         // add servlet
         if (null != servletS && servletS.length == 1 && null != servletS[0]) {
-            for (Map.Entry<Class<? extends Servlet>, String> entry : servletS[0].entrySet()) {
-                webAppContext.addServlet(entry.getKey(), entry.getValue());
+            for (Map.Entry<String, ServletHolder> entry : servletS[0].entrySet()) {
+                webAppContext.addServlet(entry.getValue(), entry.getKey());
             }
         }
 
@@ -170,7 +172,7 @@ public final class JettyFactory {
         context.addFilter(filter.getClass(), urlPattern, EnumSet.copyOf(Arrays.asList(dispatcherTypes)));
     }
 
-    public static void addListener(ServletContextHandler context, EventListener listener){
+    public static void addListener(ServletContextHandler context, EventListener listener) {
         context.addEventListener(listener);
     }
 }

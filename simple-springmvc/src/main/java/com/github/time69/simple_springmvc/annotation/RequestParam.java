@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Target(ElementType.PARAMETER)
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Param {
+public @interface RequestParam {
     /**
      * 参数映射key
      * @return

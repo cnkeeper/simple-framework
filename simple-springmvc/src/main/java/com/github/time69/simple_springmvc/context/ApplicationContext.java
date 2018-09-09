@@ -9,6 +9,8 @@ import com.github.time69.simple_springmvc.handler.support.adapter.RequestMapping
 import com.github.time69.simple_springmvc.handler.support.adapter.UrlResourceHandlerAdapter;
 import com.github.time69.simple_springmvc.handler.support.mapping.RequestMappingHandlerMapping;
 import com.github.time69.simple_springmvc.handler.support.mapping.UrlResourceHandlerMapping;
+import com.github.time69.simple_springmvc.resolver.view.UrlResourceViewResolver;
+import com.github.time69.simple_springmvc.resolver.view.ViewResolver;
 import com.github.time69.simple_springmvc.util.ClassScan;
 import com.github.time69.simple_springmvc.util.StringUtils;
 
@@ -35,10 +37,6 @@ public final class ApplicationContext {
 
     public static <T> List<T> getBean(Class<T> clazz){
         return container.get(clazz);
-    }
-
-    static {
-        refresh();
     }
 
     public static void initHandlerMethod(String packages) {
@@ -110,6 +108,11 @@ public final class ApplicationContext {
         handlerAdapterList.add(new RequestMappingHandlerAdapter());
         handlerAdapterList.add(new UrlResourceHandlerAdapter());
         container.put(HandlerAdapter.class,handlerAdapterList);
+
+
+        List<ViewResolver> viewResolverList = new ArrayList<>(1);
+        viewResolverList.add(new UrlResourceViewResolver());
+        container.put(ViewResolver.class,viewResolverList);
 
         container = Collections.unmodifiableMap(container);
     }

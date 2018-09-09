@@ -11,5 +11,5 @@ import com.github.time69.simple_springmvc.HandlerMapping;
  * @date 2018/8/23
  */
 public abstract class AbstractHandlerMapping implements HandlerMapping {
-    protected HandlerInterceptor[] handlerInterceptors;
+    protected HandlerInterceptor[] handlerInterceptors = new HandlerInterceptor[0];
 }

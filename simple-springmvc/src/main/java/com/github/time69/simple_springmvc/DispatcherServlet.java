@@ -31,12 +31,14 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
+        String path = config.getInitParameter(KEY_PACKAGENAMES);
         //首次加载时扫描Controller，RequestMapping注解
         ApplicationContext.initHandlerMethod(config.getInitParameter(KEY_PACKAGENAMES));
+        ApplicationContext.refresh();
         initHandlerMapping();
         initHandlerAdapter();
         initViewResolvers();
+        super.init(config);
     }
 
     @Override
@@ -45,6 +47,7 @@ public class DispatcherServlet extends HttpServlet {
             doDispatcher(req, resp);
         } catch (Exception e) {
             // TODO 异常处理
+            resp.sendError(HttpServletResponse.SC_BAD_GATEWAY);
         }
     }
 
@@ -124,15 +127,13 @@ public class DispatcherServlet extends HttpServlet {
         if (modelAndView.isReference()) {
             //视图解析，需要映射到真实的视图上, 此时的View实质上是String
             view = resolveViewName(modelAndView.getViewName());
-            if (null == view) {
-                throw new ServletException(String.format("ModelAndView[%s] not contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));
-            }
         } else {
             //不需要映射，本身已经包含视图
             view = modelAndView.getView();
-            if (null == view) {
-                throw new ServletException(String.format("ModelAndView[%s] neither contains View nor contains viewName[%s]", modelAndView.toString(), modelAndView.getViewName()));
-            }
+        }
+
+        if (null == view) {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
 
         view.render(modelAndView.getModelMap(), req, resp);

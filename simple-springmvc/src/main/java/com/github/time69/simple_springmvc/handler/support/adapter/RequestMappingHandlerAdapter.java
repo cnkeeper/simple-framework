@@ -6,8 +6,11 @@ import com.github.time69.simple_springmvc.ModelAndView;
 import com.github.time69.simple_springmvc.annotation.ResponseBody;
 import com.github.time69.simple_springmvc.handler.MethodHandler;
 import com.github.time69.simple_springmvc.http.MediaType;
+import com.github.time69.simple_springmvc.logger.Logger;
+import com.github.time69.simple_springmvc.logger.LoggerContext;
 import com.github.time69.simple_springmvc.resolver.arguments.MethodHandlerArgsResolver;
 import com.github.time69.simple_springmvc.resolver.returnValue.MethodHandlerReturnValueResolver;
+import com.github.time69.simple_springmvc.util.JsonUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +29,7 @@ import java.util.Map;
  * @date 2018/8/30
  */
 public class RequestMappingHandlerAdapter implements HandlerAdapter {
+    public static final Logger LOGGER = LoggerContext.getLog(RequestMappingHandlerAdapter.class);
     /**
      * 参数解析器列表
      */
@@ -87,7 +91,9 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
      */
     private Object[] getMethodArgumentValues(HttpServletRequest request, Handler handler) {
         // resolverMethodArguments
-        return null;
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        LOGGER.info("parameterMap:{}",parameterMap);
+        return new Object[0];
     }
 
     /**
@@ -132,7 +138,7 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
     private void convertReturnValue2Body(HttpServletResponse response, MethodHandler methodHandler, Object returnValue) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_UTF8.getContentType());
         PrintWriter responseWriter = response.getWriter();
-        responseWriter.write(null != returnValue ? returnValue.toString() : "");
+        responseWriter.write(null != returnValue ? JsonUtil.serialize(returnValue) : JsonUtil.serialize(""));
         responseWriter.flush();
     }
 }

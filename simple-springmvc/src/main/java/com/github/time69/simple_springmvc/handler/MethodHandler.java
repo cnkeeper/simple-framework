@@ -29,4 +29,14 @@ public class MethodHandler implements Handler {
         return annotation;
     }
 
+    public Object getBeanInstance(){
+        try {
+            return classType.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

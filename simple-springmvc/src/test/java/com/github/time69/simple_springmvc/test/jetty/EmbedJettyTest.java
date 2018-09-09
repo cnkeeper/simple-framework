@@ -1,16 +1,17 @@
 package com.github.time69.simple_springmvc.test.jetty;
 
+import com.github.time69.simple_springmvc.DispatcherServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.ErrorHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.servlet.Servlet;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -35,12 +36,18 @@ public class EmbedJettyTest {
         final int port = 8080;
         server.addConnector(JettyFactory.createServerConnector(server, port));
 
-        Map<Class<? extends Servlet>,String> servletMap = new HashMap<>();
-        servletMap.put(DispatcherServlet.class,"/*");
+        ServletHolder servletHolder = new ServletHolder();
+        servletHolder.setServlet(new DispatcherServlet());
+        servletHolder.setInitOrder(0);
+        servletHolder.setInitParameter("packageNames","com.github.time69");
         HandlerList handlerList = new HandlerList();
+
+        Map<String,ServletHolder> servletHolderMap = new LinkedHashMap<>(0);
+        servletHolderMap.put("/*",servletHolder);
+
         handlerList.setHandlers(new Handler[]{
                 JettyFactory.createResourceHandler("./webapp/"),
-                JettyFactory.createWebAppContextHandler("/jetty","./webapp",servletMap),
+                JettyFactory.createWebAppContextHandler("/jetty","./webapp",servletHolderMap),
 //                JettyFactory.createServletContextHandler("/jetty","./webapp",servletMap),
                 new DefaultHandler()
         });

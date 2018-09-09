@@ -43,7 +43,6 @@ public class DispatcherServlet extends HttpServlet {
         String servletPath = req.getServletPath();
         System.out.println("servletPath: "+servletPath);
 
-        System.out.println(Reflection.getCallerClass());
         return path;
     }
 }

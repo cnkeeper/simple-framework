@@ -36,7 +36,7 @@ public class UrlResourceHandlerMapping extends AbstractHandlerMapping{
         String resourcePath = requestURI.replaceFirst(contextPath, "");
 
 
-        httpServletRequest.setAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE,"");
+        httpServletRequest.setAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE,pathInfo);
         return null;
     }
 }

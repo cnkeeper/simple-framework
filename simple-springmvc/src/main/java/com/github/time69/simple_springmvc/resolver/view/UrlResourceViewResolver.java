@@ -37,7 +37,7 @@ public class UrlResourceViewResolver implements ViewResolver {
         View view = null;
 
         // 在静态资源目录中查找视图
-        String path = prefix + File.separator+viewName + stuff;
+        String path = prefix + "/"+viewName.replaceFirst("/","") + stuff;
         String lookPath = lookupPath(path);
         if (null == lookPath) {
             return view;
@@ -48,6 +48,8 @@ public class UrlResourceViewResolver implements ViewResolver {
             view = new ForwardView(lookPath, contentType);
         } else if (viewName.startsWith(View.PREFIX_REDIRECT)) {
             view = new RedirectView(lookPath, contentType);
+        }else {
+            view = new ForwardView(lookPath, contentType);
         }
 
         return view;
@@ -65,7 +67,7 @@ public class UrlResourceViewResolver implements ViewResolver {
      */
     public String lookupPath(String path) {
         for (String p : staticPath) {
-            URL resource = this.getClass().getClassLoader().getResource(path);
+            URL resource = this.getClass().getClassLoader().getResource(p+File.separator+path.replaceFirst("/",""));
             if (resource != null) {
                 return path;
             }
