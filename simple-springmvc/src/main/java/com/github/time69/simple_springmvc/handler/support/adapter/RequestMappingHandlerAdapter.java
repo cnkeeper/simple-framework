@@ -4,11 +4,13 @@ import com.github.time69.simple_springmvc.Handler;
 import com.github.time69.simple_springmvc.HandlerAdapter;
 import com.github.time69.simple_springmvc.ModelAndView;
 import com.github.time69.simple_springmvc.annotation.ResponseBody;
+import com.github.time69.simple_springmvc.context.ApplicationContext;
 import com.github.time69.simple_springmvc.handler.MethodHandler;
+import com.github.time69.simple_springmvc.handler.MethodParameter;
 import com.github.time69.simple_springmvc.http.MediaType;
 import com.github.time69.simple_springmvc.logger.Logger;
 import com.github.time69.simple_springmvc.logger.LoggerContext;
-import com.github.time69.simple_springmvc.resolver.arguments.MethodHandlerArgsResolver;
+import com.github.time69.simple_springmvc.resolver.arguments.MethodHandlerArgResolver;
 import com.github.time69.simple_springmvc.resolver.returnValue.MethodHandlerReturnValueResolver;
 import com.github.time69.simple_springmvc.util.JsonUtil;
 
@@ -19,6 +21,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +37,7 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
     /**
      * 参数解析器列表
      */
-    private Map<String, MethodHandlerArgsResolver> argsResolvers = new LinkedHashMap<String, MethodHandlerArgsResolver>(0);
+    private List<MethodHandlerArgResolver> argsResolvers = new LinkedList<>();
 
     /**
      * 返回值解析器列表
@@ -47,20 +51,20 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
 
     @Override
     public ModelAndView handler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws Exception {
-        return invokeHandler(request, response, handler);
+        return invokeHandler(request, response, (MethodHandler) handler);
     }
 
-    private ModelAndView invokeHandler(HttpServletRequest request, HttpServletResponse response, Handler handler) throws Exception {
+    private ModelAndView invokeHandler(HttpServletRequest request, HttpServletResponse response, MethodHandler handler) throws Exception {
         ModelAndView modelAndView = null;
         if (handler instanceof MethodHandler) {
             //请求参数封装
-            Object[] args = getMethodArgumentValues(request, handler);
+            Object[] args = getMethodArgumentValues(request, response, handler);
 
             //执行处理逻辑
-            Object returnValue = invokeMethod(request, (MethodHandler) handler, args);
+            Object returnValue = invokeMethod(request, handler, args);
 
             //返回值处理
-            modelAndView = resolverReturnValue(response, (MethodHandler) handler, returnValue);
+            modelAndView = resolverReturnValue(response, handler, returnValue);
         }
         return modelAndView;
     }
@@ -86,14 +90,27 @@ public class RequestMappingHandlerAdapter implements HandlerAdapter {
      * TODO 从请求中获取controller方法的参数，并自动封装为匹配的参数对象列表
      *
      * @param request
-     * @param handler
-     * @return
+     * @param response
+     * @param handler  @return
      */
-    private Object[] getMethodArgumentValues(HttpServletRequest request, Handler handler) {
+    private Object[] getMethodArgumentValues(HttpServletRequest request, HttpServletResponse response, MethodHandler handler) {
         // resolverMethodArguments
         Map<String, String[]> parameterMap = request.getParameterMap();
-        LOGGER.info("parameterMap:{}",parameterMap);
-        return new Object[0];
+        if (this.argsResolvers == null || this.argsResolvers.size() == 0) {
+            this.argsResolvers = ApplicationContext.getBean(MethodHandlerArgResolver.class);
+        }
+
+        Object[] args = new Object[handler.getMethodParameters().length];
+        for (MethodParameter parameter : handler.getMethodParameters()) {
+            for (MethodHandlerArgResolver argResolver : this.argsResolvers) {
+                if (argResolver.support(parameter)) {
+                    args[parameter.getIndex()] = argResolver.handleArgument(request, response, parameter);
+                    break;
+                }
+            }
+        }
+        LOGGER.info("parameterMap:{}", parameterMap);
+        return args;
     }
 
     /**

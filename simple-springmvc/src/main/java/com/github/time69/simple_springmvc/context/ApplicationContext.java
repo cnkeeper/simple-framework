@@ -5,10 +5,15 @@ import com.github.time69.simple_springmvc.HandlerMapping;
 import com.github.time69.simple_springmvc.annotation.Controller;
 import com.github.time69.simple_springmvc.annotation.RequestMapping;
 import com.github.time69.simple_springmvc.handler.MethodHandler;
+import com.github.time69.simple_springmvc.handler.MethodParameter;
 import com.github.time69.simple_springmvc.handler.support.adapter.RequestMappingHandlerAdapter;
 import com.github.time69.simple_springmvc.handler.support.adapter.UrlResourceHandlerAdapter;
 import com.github.time69.simple_springmvc.handler.support.mapping.RequestMappingHandlerMapping;
 import com.github.time69.simple_springmvc.handler.support.mapping.UrlResourceHandlerMapping;
+import com.github.time69.simple_springmvc.resolver.arguments.ContextMethodHandlerArgsResolver;
+import com.github.time69.simple_springmvc.resolver.arguments.EntityMethodHandlerArgsResolver;
+import com.github.time69.simple_springmvc.resolver.arguments.MapMethodHandlerArgsResolver;
+import com.github.time69.simple_springmvc.resolver.arguments.MethodHandlerArgResolver;
 import com.github.time69.simple_springmvc.resolver.view.UrlResourceViewResolver;
 import com.github.time69.simple_springmvc.resolver.view.ViewResolver;
 import com.github.time69.simple_springmvc.util.ClassScan;
@@ -16,6 +21,7 @@ import com.github.time69.simple_springmvc.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.util.*;
 
 /**
@@ -33,9 +39,9 @@ public final class ApplicationContext {
 
     public static Map<String, MethodHandler> BEAN_HANDLER_METHOD_MAP;
 
-    private static Map<Class,List> container = new HashMap<>();
+    private static Map<Class, List> container = new HashMap<>();
 
-    public static <T> List<T> getBean(Class<T> clazz){
+    public static <T> List<T> getBean(Class<T> clazz) {
         return container.get(clazz);
     }
 
@@ -91,6 +97,13 @@ public final class ApplicationContext {
                 MethodHandler methodHandler = new MethodHandler();
                 methodHandler.setClassType(clazz);
                 methodHandler.setMethod(method);
+                Parameter[] parameters = method.getParameters();
+                MethodParameter[] methodParameters = new MethodParameter[parameters.length];
+                for (int index = 0; index < parameters.length; index++) {
+                    methodParameters[index] = new MethodParameter(parameters[index].getType(),parameters[index],index,null);
+                }
+                methodHandler.setMethodParameters(methodParameters);
+
                 handlerMethodMap.put(url, methodHandler);
             }
             //排除非public方法
@@ -98,21 +111,40 @@ public final class ApplicationContext {
         return handlerMethodMap;
     }
 
-    public static void refresh(){
+    public static void refresh() {
+
+        /**
+         * MethodHandlerArgResolver注入容器
+         */
+        List<MethodHandlerArgResolver> methodHandlerArgResolverList = new ArrayList<>(8);
+        methodHandlerArgResolverList.add(new MapMethodHandlerArgsResolver());
+        methodHandlerArgResolverList.add(new ContextMethodHandlerArgsResolver());
+        methodHandlerArgResolverList.add(new EntityMethodHandlerArgsResolver());
+        container.put(MethodHandlerArgResolver.class, Collections.unmodifiableList(methodHandlerArgResolverList));
+
+        /**
+         * ViewResolver注入容器
+         */
+        List<ViewResolver> viewResolverList = new ArrayList<>(1);
+        viewResolverList.add(new UrlResourceViewResolver());
+        container.put(ViewResolver.class, Collections.unmodifiableList(viewResolverList));
+
+        /**
+         * HandlerMapping注入容器
+         */
         List<HandlerMapping> handlerMappingList = new ArrayList();
         handlerMappingList.add(new RequestMappingHandlerMapping());
         handlerMappingList.add(new UrlResourceHandlerMapping());
-        container.put(HandlerMapping.class,handlerMappingList);
+        container.put(HandlerMapping.class, Collections.unmodifiableList(handlerMappingList));
 
+        /**
+         * HandlerAdapter注入容器
+         */
         List<HandlerAdapter> handlerAdapterList = new ArrayList<>();
         handlerAdapterList.add(new RequestMappingHandlerAdapter());
         handlerAdapterList.add(new UrlResourceHandlerAdapter());
-        container.put(HandlerAdapter.class,handlerAdapterList);
+        container.put(HandlerAdapter.class, Collections.unmodifiableList(handlerAdapterList));
 
-
-        List<ViewResolver> viewResolverList = new ArrayList<>(1);
-        viewResolverList.add(new UrlResourceViewResolver());
-        container.put(ViewResolver.class,viewResolverList);
 
         container = Collections.unmodifiableMap(container);
     }

@@ -1,6 +1,8 @@
 package com.github.time69.simple_springmvc.handler;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Parameter;
 
@@ -12,9 +14,18 @@ import java.lang.reflect.Parameter;
  * @date 2018/8/30
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MethodParameter {
     private Class<?> parameterType;
+
     private Parameter parameter;
+    /**
+     * 参数下标
+     */
     private int index;
+    /**
+     * 参数名
+     */
     private String name;
 }

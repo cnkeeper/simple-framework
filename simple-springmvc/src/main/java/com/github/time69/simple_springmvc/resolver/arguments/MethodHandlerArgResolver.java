@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 0.0.0
  * @date 2018/9/6
  */
-public interface MethodHandlerArgsResolver extends Resolver {
+public interface MethodHandlerArgResolver extends Resolver {
     /**
      * 是否支持处理该参数
      * @param parameter
@@ -26,8 +26,8 @@ public interface MethodHandlerArgsResolver extends Resolver {
      * 请求参数封装为对象
      * @param request
      * @param response
-     * @param methodHandler
+     * @param methodParameter
      * @return
      */
-    Object[] handleArguments(HttpServletRequest request, HttpServletResponse response, MethodHandler methodHandler);
+    Object handleArgument(HttpServletRequest request, HttpServletResponse response, MethodParameter methodParameter);
 }
