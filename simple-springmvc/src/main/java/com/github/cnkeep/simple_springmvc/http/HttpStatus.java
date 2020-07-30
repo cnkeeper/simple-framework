@@ -1,0 +1,37 @@
+package com.github.cnkeep.simple_springmvc.http;
+
+/**
+ * 描述~
+ *
+ * @author <a href="zhangleili924@gmail.com">LeiLi.Zhang</a>
+ * @version 0.0.0
+ * @date 2018/8/30
+ */
+public enum HttpStatus {
+
+    /**
+     * response status:200
+     */
+    STATUS_200(200, "OK"),
+
+    /**
+     * response status:200
+     */
+    STATUS_403(403,"403"),
+    /**
+     * response status:200
+     */
+    STATUS_404(404, "404"),
+    /**
+     * response status:200
+     */
+    STATUS_500(500, "500");
+
+    private int status;
+    private String desc;
+
+    private HttpStatus(int status, String desc) {
+        this.status = status;
+        this.desc = desc;
+    }
+}

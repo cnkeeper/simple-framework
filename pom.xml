@@ -13,14 +13,13 @@
     <developers>
         <developer>
             <name>TIME69</name>
-            <email>1348555156@qq.com</email>
+            <email>zhangleili924@gmail.com</email>
             <url>https://github.com/TIME69/simple-framework</url>
         </developer>
     </developers>
 
     <modules>
         <module>simple-springmvc</module>
-        <module>simpe_rpc</module>
     </modules>
 
     <properties>
