@@ -21,6 +21,7 @@
     <modules>
         <module>simple-springmvc</module>
         <module>simple-logger</module>
+        <module>simple-common-utils</module>
     </modules>
 
     <properties>
