@@ -1,0 +1,3 @@
+default=com.github.cnkeep.dubbo.serialize.jdk.JdkDeserialize#默认jdk实现
+# jackson
+jackson=com.github.cnkeep.dubbo.serialize.jackson.JackSonDeserialize

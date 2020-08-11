@@ -1,0 +1,2 @@
+# jackson
+jackson=com.github.cnkeep.dubbo.serialize.jackson.JackSonSerialize
