@@ -33,6 +33,7 @@ public class FilterChain {
             }
         });
 
+        // 套娃0_0方式生成责任链ß
         int size = filterList.size();
         Invoker last = invoker;
         for (int i = size - 1; i >= 0; i--) {
