@@ -30,6 +30,15 @@
         <project.deploy>deploy</project.deploy>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>1.5.15.RELEASE</spring-boot.version>
+        <tomcat.version>8.5.32</tomcat.version>
+        <jetty.version>9.4.11.v20180605</jetty.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <log4j.version>1.2.17</log4j.version>
+        <log4j2.version>2.10.0</log4j2.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <jackson.version>2.9.1</jackson.version>
+        <lombok.version>1.18.0</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -41,7 +50,75 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- =======================start Logs ==============================-->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- =======================start Logs ==============================-->
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>RELEASE</version>
+            </dependency>
+
+            <!-- jackson-core -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <build>
