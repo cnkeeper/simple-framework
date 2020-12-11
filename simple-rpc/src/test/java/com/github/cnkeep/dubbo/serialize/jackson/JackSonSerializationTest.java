@@ -24,7 +24,7 @@ public class JackSonSerializationTest {
         protocol.setBody("hello world");
         protocol.setVersion(1);
 
-        serialization.serialize(System.out).serialize(protocol);
+        serialization.serialize(System.out).writeObject(protocol);
     }
 
     @Test

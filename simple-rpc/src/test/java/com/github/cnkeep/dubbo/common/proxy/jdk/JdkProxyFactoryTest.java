@@ -63,7 +63,7 @@ public class JdkProxyFactoryTest {
         registerServer.put(invoker.getInterface().getName(), invokerList);
     }
 
-    public <T> List<Invoker> subscribe(Class<T> type) {
+    public <T> List<Invoker> registry_subscribe(Class<T> type) {
         return registerServer.get(type.getName());
     }
 
@@ -82,26 +82,36 @@ public class JdkProxyFactoryTest {
      * @param <T>
      * @return
      */
-    public <T> Invoker<T> select(List<Invoker> invokers) {
+    public <T> Invoker<T> loadbalance_select(List<Invoker> invokers) {
         // random
         return invokers.isEmpty() ? null : invokers.get(new Random().nextInt(invokers.size()));
     }
 
     /**
-     * 路由
+     * Directory查找可用路由
      *
      * @param type
      * @param <T>
      * @return
      */
-    public <T> List<Invoker> router(Class<T> type) {
-        List<Invoker> invokerList = subscribe(type);
+    public <T> List<Invoker> directory_list(Class<T> type) {
+        List<Invoker> invokerList = registry_subscribe(type);
+
+        return router_route(invokerList);
+    }
+
+    /**
+     * 路由
+     * @param invokerList
+     * @param <T>
+     * @return
+     */
+    public <T> List<Invoker> router_route(List<Invoker> invokerList){
         List<Invoker> routerList = invokerList.subList(0, Math.min(3, invokerList.size()));
         return routerList;
     }
 
-
-    public <T> T reference(Class<T> type) {
+    public <T> T protocol_reference(Class<T> type) {
         Invoker<T> clusterInvoker = new Invoker<T>() {
             @Override
             public Class<T> getInterface() {
@@ -110,8 +120,8 @@ public class JdkProxyFactoryTest {
 
             @Override
             public Result invoke(Invocation invocation) {
-                List<Invoker> invokers = router(type);
-                Invoker<T> invoker = select(invokers);
+                List<Invoker> invokers = directory_list(type);
+                Invoker<T> invoker = loadbalance_select(invokers);
                 return invoker.invoke(invocation);
             }
         };
@@ -122,7 +132,7 @@ public class JdkProxyFactoryTest {
 
     @Test
     public void getProxy() {
-        IConsumer reference = reference(IConsumer.class);
+        IConsumer reference = protocol_reference(IConsumer.class);
         for (int i = 0; i < 10; i++) {
             System.out.println(reference.echo("hello"));
         }
