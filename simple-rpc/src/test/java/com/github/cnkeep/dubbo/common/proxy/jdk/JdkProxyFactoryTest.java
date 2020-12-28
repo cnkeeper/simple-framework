@@ -1,6 +1,7 @@
 package com.github.cnkeep.dubbo.common.proxy.jdk;
 
 import com.github.cnkeep.dubbo.common.Result;
+import com.github.cnkeep.dubbo.common.proxy.ProxyFactory;
 import com.github.cnkeep.dubbo.rpc.Invocation;
 import com.github.cnkeep.dubbo.rpc.Invoker;
 import org.junit.Before;
@@ -11,7 +12,7 @@ import java.util.*;
 
 
 public class JdkProxyFactoryTest {
-    private JdkProxyFactory jdkProxyFactory = new JdkProxyFactory();
+    private ProxyFactory proxyFactory = new JdkProxyFactory();
     private Map<String, List<Invoker>> registerServer = new HashMap<>();
     private Map<String, Invoker> exportedMap = new HashMap<>();
 
@@ -112,21 +113,29 @@ public class JdkProxyFactoryTest {
     }
 
     public <T> T protocol_reference(Class<T> type) {
-        Invoker<T> clusterInvoker = new Invoker<T>() {
-            @Override
-            public Class<T> getInterface() {
-                return type;
-            }
+        Invoker<T> clusterInvoker = getInvoker(type);
+        return proxyFactory.getProxy(clusterInvoker, new Class[]{type});
+    }
 
-            @Override
-            public Result invoke(Invocation invocation) {
-                List<Invoker> invokers = directory_list(type);
-                Invoker<T> invoker = loadbalance_select(invokers);
-                return invoker.invoke(invocation);
-            }
-        };
+    private <T> Invoker<T> getInvoker(Class<T> type) {
+        return newDubboInvoker(type);
+    }
 
-        return jdkProxyFactory.getProxy(clusterInvoker, new Class[]{type});
+
+    private <T> Invoker<T> newDubboInvoker(Class<T> type) {
+        return new Invoker<T>() {
+                @Override
+                public Class<T> getInterface() {
+                    return type;
+                }
+
+                @Override
+                public Result invoke(Invocation invocation) {
+                    List<Invoker> invokers = directory_list(type);
+                    Invoker<T> invoker = loadbalance_select(invokers);
+                    return invoker.invoke(invocation);
+                }
+            };
     }
 
 

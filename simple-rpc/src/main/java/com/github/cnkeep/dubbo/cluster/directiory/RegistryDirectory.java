@@ -8,18 +8,17 @@ import com.github.cnkeep.dubbo.rpc.Invoker;
 
 import java.util.List;
 
-public class RegistryDirectory implements Directory {
+public class RegistryDirectory<T> implements Directory<T> {
 
     private RegistryService registryService;
 
-    /**
-     * TODO
-     * @param invocation
-     * @param <T>
-     * @return
-     */
     @Override
-    public <T> List<Invoker<T>> list(Invocation invocation) {
+    public Class getInterface() {
+        return null;
+    }
+
+    @Override
+    public List<Invoker<T>> list(Invocation invocation) {
         return null;
     }
 }

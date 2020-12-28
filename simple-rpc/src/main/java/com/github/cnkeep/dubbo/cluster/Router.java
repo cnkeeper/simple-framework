@@ -7,5 +7,10 @@ import java.util.List;
 
 public interface Router {
 
-    List<Invoker> route(List<Invoker> invokers);
+    /**
+     * 路由选择
+     * @param invokers
+     * @return
+     */
+   <T> List<Invoker<T>> route(List<Invoker<T>> invokers);
 }

@@ -16,6 +16,9 @@ public class JvmRegisterService implements RegistryService {
     @Override
     public void register(URL url) {
         List<URL> urls = registerMap.getOrDefault(url, new ArrayList<>());
+        if(urls.contains(url)){
+            return;
+        }
         urls.add(url);
         registerMap.put(url, urls);
         doNotify(url);
@@ -33,6 +36,7 @@ public class JvmRegisterService implements RegistryService {
     @Override
     public void subscribe(URL url, NotifyListener listener) {
         List<NotifyListener> listeners = listenerMap.getOrDefault(url, new ArrayList<>());
+        listeners.add(listener);
         listenerMap.put(url, listeners);
     }
 

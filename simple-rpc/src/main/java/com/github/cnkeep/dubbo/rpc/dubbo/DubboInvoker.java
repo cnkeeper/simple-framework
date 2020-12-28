@@ -25,6 +25,7 @@ public class DubboInvoker<T> implements Invoker<T> {
         return type;
     }
 
+    @Override
     public Result invoke(Invocation invocation){
         // TODO client调用远程服务
         client.send(invocation);

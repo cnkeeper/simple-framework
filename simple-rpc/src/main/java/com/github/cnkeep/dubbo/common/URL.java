@@ -1,13 +1,14 @@
 package com.github.cnkeep.dubbo.common;
 
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class URL {
     private String protocol;
     private String path;
-    private Map<String, Object> parameters;
+    private Map<String, String> parameters = new HashMap<>();
 
     public URL() {
     }
@@ -28,12 +29,21 @@ public class URL {
         this.path = path;
     }
 
-    public Map<String, Object> getParameters() {
+    public Map<String, String> getParameters() {
         return parameters;
     }
 
-    public void setParameters(Map<String, Object> parameters) {
+    public void setParameters(Map<String, String> parameters) {
         this.parameters = parameters;
+    }
+
+    public String getParameter(String key, String defaultV) {
+        String value = parameters.get(key);
+        return null == value ? defaultV : value;
+    }
+
+    public void setParameter(String key,String vlaue){
+        parameters.put(key,vlaue);
     }
 
     @Override

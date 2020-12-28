@@ -6,6 +6,8 @@ import com.github.cnkeep.dubbo.rpc.Invoker;
 
 import java.util.List;
 
-public interface Directory {
-   <T> List<Invoker<T>> list(Invocation invocation);
+public interface Directory<T> {
+    Class<T> getInterface();
+
+    List<Invoker<T>> list(Invocation invocation);
 }

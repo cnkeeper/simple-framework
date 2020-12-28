@@ -47,4 +47,17 @@ public class Result {
     public boolean hasException() {
         return exception != null;
     }
+
+    public static final Result newResult(Object value, Map<String, Object> attachment, Exception exception) {
+        return new Result(value, attachment, exception);
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "value=" + value +
+                ", attachment=" + attachment +
+                ", exception=" + exception +
+                '}';
+    }
 }
