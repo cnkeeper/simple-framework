@@ -9,7 +9,12 @@ import com.github.cnkeep.dubbo.rpc.Invoker;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-
+/**
+ * @description: jdk代理工厂
+ * @author: <a href="mailto:zhangleili924@gamil.com">LeiLi.Zhang</a>
+ * @date: 2020-12-28 17:43
+ * @version: v0.0.1
+ **/
 public class JdkProxyFactory implements ProxyFactory {
     /**
      * for consumer

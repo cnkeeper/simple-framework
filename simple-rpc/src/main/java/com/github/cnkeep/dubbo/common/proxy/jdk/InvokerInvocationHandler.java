@@ -7,10 +7,10 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
- * @description:
+ * @description: jdk代理处理器
  * @author: <a href="mailto:zhangleili924@gamil.com">LeiLi.Zhang</a>
  * @date: 2020/8/17
- * @version:
+ * @version: v0.0.1
  **/
 public class InvokerInvocationHandler implements InvocationHandler {
     private Invoker invoker;
