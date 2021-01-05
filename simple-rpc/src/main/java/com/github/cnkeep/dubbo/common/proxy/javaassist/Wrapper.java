@@ -77,7 +77,7 @@ public abstract class Wrapper {
         return (Wrapper) ctClass.toClass().newInstance();
     }
 
-    protected static String args(Class<?>[] cs, String name) {
+    public static String args(Class<?>[] cs, String name) {
         int len = cs.length;
         if (len == 0) {
             return "";
@@ -92,7 +92,7 @@ public abstract class Wrapper {
         return sb.toString();
     }
 
-    protected static String arg(Class<?> cl, String name) {
+    public static String arg(Class<?> cl, String name) {
         if (cl.isPrimitive()) {
             if (cl == Boolean.TYPE) {
                 return "((Boolean)" + name + ").booleanValue()";
