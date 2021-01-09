@@ -1,6 +1,7 @@
 package com.github.cnkeep.dubbo.cluster;
 
 
+import com.github.cnkeep.dubbo.common.URL;
 import com.github.cnkeep.dubbo.rpc.Invocation;
 import com.github.cnkeep.dubbo.rpc.Invoker;
 
@@ -10,4 +11,6 @@ public interface Directory<T> {
     Class<T> getInterface();
 
     List<Invoker<T>> list(Invocation invocation);
+
+    URL getConsumerUrl();
 }

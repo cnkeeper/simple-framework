@@ -2,6 +2,7 @@ package com.github.cnkeep.dubbo.cluster.directiory;
 
 
 import com.github.cnkeep.dubbo.cluster.Directory;
+import com.github.cnkeep.dubbo.common.URL;
 import com.github.cnkeep.dubbo.registry.RegistryService;
 import com.github.cnkeep.dubbo.rpc.Invocation;
 import com.github.cnkeep.dubbo.rpc.Invoker;
@@ -19,6 +20,11 @@ public class RegistryDirectory<T> implements Directory<T> {
 
     @Override
     public List<Invoker<T>> list(Invocation invocation) {
+        return null;
+    }
+
+    @Override
+    public URL getConsumerUrl() {
         return null;
     }
 }
