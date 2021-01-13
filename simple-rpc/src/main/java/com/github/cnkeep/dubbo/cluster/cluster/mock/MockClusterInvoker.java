@@ -9,10 +9,10 @@ import com.github.cnkeep.dubbo.rpc.Invocation;
 import com.github.cnkeep.dubbo.rpc.Invoker;
 
 /**
- * @description:
+ * @description: mock 处理
  * @author: <a href="mailto:zhangleili924@gamil.com">LeiLi.Zhang</a>
  * @date: 2020-12-24 9:7
- * @version:
+ * @version: v0.0.1
  **/
 public class MockClusterInvoker<T> implements Invoker {
     private final String MOCK_KEY = "mock";

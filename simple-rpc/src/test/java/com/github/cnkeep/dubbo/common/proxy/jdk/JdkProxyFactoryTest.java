@@ -113,7 +113,7 @@ public class JdkProxyFactoryTest {
     }
 
     public <T> T protocol_reference(Class<T> type) {
-        Invoker<T> clusterInvoker = getInvoker(type);
+        Invoker<T> clusterInvoker = newClusterInvoker(type);
         return proxyFactory.getProxy(clusterInvoker, new Class[]{type});
     }
 
@@ -131,12 +131,30 @@ public class JdkProxyFactoryTest {
 
                 @Override
                 public Result invoke(Invocation invocation) {
+                    // remote request
+                    return null;
+                }
+            };
+    }
+
+
+
+    private <T> Invoker<T> newClusterInvoker(Class<T> type) {
+        return new Invoker<T>() {
+                @Override
+                public Class<T> getInterface() {
+                    return type;
+                }
+
+                @Override
+                public Result invoke(Invocation invocation) {
                     List<Invoker> invokers = directory_list(type);
                     Invoker<T> invoker = loadbalance_select(invokers);
                     return invoker.invoke(invocation);
                 }
             };
     }
+
 
 
     @Test
