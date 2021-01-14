@@ -8,7 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
+/**
+ * @description: JvmRegisterService
+ * @author: <a href="mailto:zhangleili924@gamil.com">LeiLi.Zhang</a>
+ * @date: 2021-1-14 10:23
+ * @version: v0.0.1
+ **/
 public class JvmRegisterService implements RegistryService {
     private ConcurrentMap<URL, List<URL>> registerMap = new ConcurrentHashMap<>();
     private ConcurrentMap<URL, List<NotifyListener>> listenerMap = new ConcurrentHashMap<>();

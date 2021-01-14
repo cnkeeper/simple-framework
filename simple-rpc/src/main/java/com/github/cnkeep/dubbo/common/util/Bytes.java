@@ -86,7 +86,7 @@ public final class Bytes {
         dest[offset + 7] = (byte) n;
     }
 
-    public static double readDoule(byte[] dest, int offset) {
+    public static double readDouble(byte[] dest, int offset) {
         long n = ((dest[offset + 0] & 0xFF) << 56)
                 + ((dest[offset + 1] & 0xFF) << 48)
                 + ((dest[offset + 2] & 0xFF) << 40)
