@@ -14,7 +14,7 @@ public class PackageScanTest {
 
     @Test
     public void testSrcPackage(){
-        Class<?>[] classes = ClassScan.scanPackage("com.github.time69.simple_springmvc");
+        Class<?>[] classes = ClassScan.scanPackage("com.github.cnkeep.simple_springmvc");
 
         for (Class<?> clazz:classes){
             System.out.println(clazz);

@@ -39,7 +39,7 @@ public class EmbedJettyTest {
         ServletHolder servletHolder = new ServletHolder();
         servletHolder.setServlet(new DispatcherServlet());
         servletHolder.setInitOrder(0);
-        servletHolder.setInitParameter("packageNames","com.github.time69");
+        servletHolder.setInitParameter("packageNames","com.github.cnkeep");
         HandlerList handlerList = new HandlerList();
 
         Map<String,ServletHolder> servletHolderMap = new LinkedHashMap<>(0);
