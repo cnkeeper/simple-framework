@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.TIME69</groupId>
+    <groupId>com.github.cnkeep</groupId>
     <artifactId>simple-framework</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -12,9 +12,9 @@
 
     <developers>
         <developer>
-            <name>TIME69</name>
+            <name>cnkeep</name>
             <email>zhangleili924@gmail.com</email>
-            <url>https://github.com/TIME69/simple-framework</url>
+            <url>https://github.com/cnkeep/simple-framework</url>
         </developer>
     </developers>
 

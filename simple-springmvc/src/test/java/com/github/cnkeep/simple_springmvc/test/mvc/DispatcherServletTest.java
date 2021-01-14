@@ -31,7 +31,7 @@ public class DispatcherServletTest {
 
             @Override
             public String getInitParameter(String s) {
-                return "packageNames".equals(s)?"com.github.time69.simple_springmvc.test.mvc.controller":"";
+                return "packageNames".equals(s)?"com.github.cnkeep.simple_springmvc.test.mvc.controller":"";
             }
 
             @Override
