@@ -2283,6 +2283,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
             }
         }
 
+        // https://tech.meituan.com/2016/12/02/redblack-tree.html
         static <K,V> TreeNode<K,V> balanceDeletion(TreeNode<K,V> root,
                                                    TreeNode<K,V> x) {
             for (TreeNode<K,V> xp, xpl, xpr;;) {
@@ -2298,6 +2299,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                 }
                 else if ((xpl = xp.left) == x) {
                     if ((xpr = xp.right) != null && xpr.red) {
+                        // Case 4
                         xpr.red = false;
                         xp.red = true;
                         root = rotateLeft(root, xp);
@@ -2309,11 +2311,13 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                         TreeNode<K,V> sl = xpr.left, sr = xpr.right;
                         if ((sr == null || !sr.red) &&
                             (sl == null || !sl.red)) {
+                            // Case 2
                             xpr.red = true;
                             x = xp;
                         }
                         else {
                             if (sr == null || !sr.red) {
+                                // Case 3
                                 if (sl != null)
                                     sl.red = false;
                                 xpr.red = true;
@@ -2327,6 +2331,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                                     sr.red = false;
                             }
                             if (xp != null) {
+                                // Case 1
                                 xp.red = false;
                                 root = rotateLeft(root, xp);
                             }
