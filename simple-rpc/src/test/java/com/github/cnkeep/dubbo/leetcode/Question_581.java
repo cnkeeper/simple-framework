@@ -4,21 +4,15 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-/**
- * @description:
- * @author: <a href="mailto:zhangleili924@gamil.com">LeiLi.Zhang</a>
- * @date: 2021-1-26 22:37
- * @version:
- **/
 public class Question_581 {
 
     /**
      * Q-581:给你一个整数数组 nums ，你需要找出一个 连续子数组 ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。
      * 请你找出符合题意的 最短 子数组，并输出它的长度。
-     *
+     * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/shortest-unsorted-continuous-subarray
-     *
+     * <p>
      * 整个数组可以分为3个部分：左侧递增区，中间乱序区，右侧递增区, 所以问题的关键就是如何确定中间区域的边界。
      * 左侧的最大值，一定小于乱序区的最小值；
      * 右侧的最小值，一定大于乱序区的最大值;
