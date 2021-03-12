@@ -22,6 +22,7 @@
         <module>simple-springmvc</module>
         <module>simple-logger</module>
         <module>simple-rpc</module>
+        <module>simple-common</module>
     </modules>
 
     <properties>
