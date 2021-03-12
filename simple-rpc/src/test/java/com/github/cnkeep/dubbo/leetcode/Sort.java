@@ -73,17 +73,17 @@ public class Sort {
 
     private static int partition(int[] nums, int left, int right) {
         // 取最左为基准
-        int pivot = left;
-        int index = pivot + 1;
+        int base = left;
+        int index = base + 1;
         // 选择小的数依次放在左边
         for (int i = index; i <= right; i++) {
-            if (nums[i] < nums[pivot]) {
-                swap(nums, index, pivot);
+            if (nums[i] < nums[base]) {
+                swap(nums, i, index);
                 index++;
             }
         }
         // 基准值位置找到了
-        swap(nums, pivot, index - 1);
+        swap(nums, base, index - 1);
         return index - 1;
     }
 
@@ -131,7 +131,21 @@ public class Sort {
 
     public static void main(String[] args) {
         int[] nums = {0, 5, 1, 3, 1, 2};
-        heapSort(nums);
+        quickSort(nums);
         System.out.println(Arrays.toString(nums));
+    }
+
+
+    public static int partition1(int[] arr, int left, int right) {
+        int baseIndex = left;
+        int index = left + 1;
+        for (int i = left + 1; i < right; i++) {
+            if (arr[i] < arr[baseIndex]) {
+                swap(arr, i, index);
+                index++;
+            }
+        }
+        swap(arr, baseIndex, index - 1);
+        return index - 1;
     }
 }
