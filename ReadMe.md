@@ -9,3 +9,4 @@
 |[simple-rpc](simple-rpc)| dubbo框架 |
 |[simple-common](simple-common)| 常用工具组件 |
 |[simple-unit](simple-unit)| 自定义Junit Runner，实现自己的测试组件 |
+|[simple-maven-plugin](simple-maven-plugin)| 自定义实现一个maven plugin |

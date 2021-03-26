@@ -8,7 +8,6 @@ import com.googlecode.aviator.runtime.type.AviatorBoolean;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import org.junit.Test;
 import org.springframework.util.StopWatch;
-import sun.jvm.hotspot.utilities.RBTree;
 
 import java.util.HashMap;
 import java.util.Map;
