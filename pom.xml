@@ -23,6 +23,7 @@
         <module>simple-logger</module>
         <module>simple-rpc</module>
         <module>simple-common</module>
+        <module>simple-unit</module>
     </modules>
 
     <properties>
