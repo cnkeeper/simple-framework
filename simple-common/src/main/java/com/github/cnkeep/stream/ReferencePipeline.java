@@ -1,5 +1,7 @@
 package com.github.cnkeep.stream;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -27,6 +29,31 @@ public abstract class ReferencePipeline<T, R> extends AbstractPipeline<T, R> imp
                         if (predicate.test(t)) {
                             downstream.accept(t);
                         }
+                    }
+                };
+            }
+        };
+    }
+
+    @Override
+    public Stream<R> distinct() {
+        return new StatelessOP<R, R>(source, this) {
+            @Override
+            Sink opWrapSink(int flags, Sink sink) {
+                return new Sink.ChainSink<R, R>(sink) {
+                    Set<R> set;
+
+                    @Override
+                    public void accept(R o) {
+                        if (set.add(o)) {
+                            downstream.accept(o);
+                        }
+                    }
+
+                    @Override
+                    public void begin(int size) {
+                        set = new HashSet<>(size);
+                        super.begin(size);
                     }
                 };
             }
@@ -65,7 +92,7 @@ public abstract class ReferencePipeline<T, R> extends AbstractPipeline<T, R> imp
 
         sink.begin(0);
         Sink<R> finalSink = sink;
-        source.forEachRetaining(t-> finalSink.accept((R) t));
+        source.forEachRetaining(t -> finalSink.accept((R) t));
         sink.end();
 
     }

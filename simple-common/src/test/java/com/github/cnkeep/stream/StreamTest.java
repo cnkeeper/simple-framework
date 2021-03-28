@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class StreamTest {
     @Test
     public void streamTest() {
-        String[] arr = {"1", "2", "3", "4", "5"};
+        String[] arr = {"1", "1", "2", "3", "4", "5"};
         Spliterator<String> spliterator = new Spliterator<String>() {
             int curIndex = 0;
 
@@ -47,6 +47,7 @@ public class StreamTest {
         };
 
         stream.map(Integer::valueOf)
+                .distinct()
                 .filter(t -> t < 3)
                 .map(t -> t * 10)
                 .forEach(System.out::println);

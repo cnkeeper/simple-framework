@@ -17,4 +17,6 @@ public interface Stream<T> {
     void forEach(Consumer<? super T> action);
 
     <R> Stream<R> map(Function<T, R> mapper);
+
+    Stream<T> distinct();
 }
