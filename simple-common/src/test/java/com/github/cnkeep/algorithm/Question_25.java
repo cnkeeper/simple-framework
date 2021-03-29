@@ -1,12 +1,16 @@
-package com.github.cnkeep.dubbo.leetcode;
+package com.github.cnkeep.algorithm;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 每个K个结点反转链表
+ */
 public class Question_25 {
 
     /**
      * 每k个节点一组，反转
+     *
      * @param head
      * @param k
      * @return
@@ -22,7 +26,7 @@ public class Question_25 {
             for (int i = 0; i < k && end != null; i++) {
                 end = end.next;
             }
-            if(end==null) break;
+            if (end == null) break;
 
             ListNode start = pre.next;
             ListNode next = end.next;
@@ -57,21 +61,22 @@ public class Question_25 {
         }
         System.out.println(values);
     }
-}
 
-class ListNode {
-    int val;
-    ListNode next;
 
-    ListNode() {
-    }
+    public static class ListNode {
+        int val;
+        ListNode next;
 
-    ListNode(int val) {
-        this.val = val;
-    }
+        ListNode() {
+        }
 
-    ListNode(int val, ListNode next) {
-        this.val = val;
-        this.next = next;
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.github.cnkeep.dubbo.leetcode;
+package com.github.cnkeep.algorithm;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

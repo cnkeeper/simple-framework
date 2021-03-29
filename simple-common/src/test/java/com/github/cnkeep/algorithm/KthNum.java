@@ -1,16 +1,23 @@
-package com.github.cnkeep.dubbo.leetcode;
+package com.github.cnkeep.algorithm;
 
 import java.util.PriorityQueue;
-import java.util.TreeSet;
 
 /**
- * @description:
+ * @description: TopN求解
  * @author: <a href="mailto:zhangleili924@gmail.com">LeiLi.Zhang</a>
  * @date: 2021/3/11
  * @version:
  **/
 public class KthNum {
+    /**
+     * 求TopN，使用堆结构
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
     public static int findKthLargest(int[] nums, int k) {
+        // 这里使用PriorityQueue而不是TreeMap是因为要考虑数据存在重复的情况
         PriorityQueue<Integer> tree = new PriorityQueue<>();
         for (int i = 0; i < nums.length; i++) {
             if (tree.size() < k) {
@@ -28,23 +35,8 @@ public class KthNum {
     }
 
     public static void main(String[] args) {
-        int[] arr = {3,2,3,1,2,4,5,5,6};
+        int[] arr = {3, 2, 3, 1, 2, 4, 5, 5, 6};
         int kthLargest = findKthLargest(arr, 4);
         System.out.println(kthLargest);
-
-        int cap = 17;
-        System.out.println(Integer.toBinaryString(cap));
-        int n = cap;
-        System.out.println(Integer.toBinaryString(n));
-        n |= n >>> 1;
-        System.out.println(Integer.toBinaryString(n));
-        n |= n >>> 2;
-        System.out.println(Integer.toBinaryString(n));
-        n |= n >>> 4;
-        System.out.println(Integer.toBinaryString(n));
-        n |= n >>> 8;
-        System.out.println(Integer.toBinaryString(n));
-        n |= n >>> 16;
-        System.out.println(Integer.toBinaryString(n));
     }
 }
