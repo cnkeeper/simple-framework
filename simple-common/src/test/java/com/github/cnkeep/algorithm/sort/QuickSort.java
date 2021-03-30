@@ -1,4 +1,4 @@
-package com.github.cnkeep.algorithm;
+package com.github.cnkeep.algorithm.sort;
 
 import java.util.Arrays;
 

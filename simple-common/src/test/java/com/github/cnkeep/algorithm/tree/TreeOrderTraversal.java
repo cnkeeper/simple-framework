@@ -1,9 +1,6 @@
-package com.github.cnkeep.algorithm;
+package com.github.cnkeep.algorithm.tree;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @description: 二叉树遍历
@@ -73,5 +70,27 @@ public class TreeOrderTraversal {
         }
 
         return result;
+    }
+
+    public void levelTraversal(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        queue.add(null);
+        int level = 1;
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            System.out.println(poll.val);
+            if(poll == null){
+                level++;
+                queue.add(null);
+            }else {
+                if (poll.left != null) {
+                    queue.add(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.add(poll.right);
+                }
+            }
+        }
     }
 }

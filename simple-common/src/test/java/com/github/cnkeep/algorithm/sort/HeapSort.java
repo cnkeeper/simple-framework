@@ -1,6 +1,10 @@
-package com.github.cnkeep.algorithm;
+package com.github.cnkeep.algorithm.sort;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -27,7 +31,7 @@ public class HeapSort {
     }
 
     private static void heapify(int[] nums, int i, int length) {
-        int curNode = i;
+        int curParentNode = i;
         for (int k = i * 2 + 1; k < length; k = k * 2 + 1) {
             // max(left, right) 如果左子结点小于右子结点，k指向右子结点
             if (k + 1 < length && nums[k] < nums[k + 1]) {
@@ -35,9 +39,9 @@ public class HeapSort {
             }
 
             // 子节点最大值和父节点交换
-            if (nums[k] > nums[curNode]) {
-                swap(nums, curNode, k);
-                curNode = k;
+            if (nums[k] > nums[curParentNode]) {
+                swap(nums, curParentNode, k);
+                curParentNode = k;
             }
         }
     }
@@ -52,5 +56,23 @@ public class HeapSort {
         int[] nums = {0, 5, 1, 3, 1, 2};
         heapSort(nums);
         System.out.println(Arrays.toString(nums));
+    }
+
+    public static class Mail {
+
+    }
+
+    public List<Mail> search(List<Mail> dataFlow, List<Predicate<Mail>> conditions) {
+        if (dataFlow == null || dataFlow.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return dataFlow.parallelStream()
+                .filter(mail -> doMatch(mail, conditions))
+                .collect(Collectors.toList());
+    }
+
+    private boolean doMatch(Mail mail, List<Predicate<Mail>> conditions) {
+        return conditions.parallelStream().allMatch(cond -> cond.test(mail));
     }
 }

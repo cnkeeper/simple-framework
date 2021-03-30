@@ -9,89 +9,80 @@ import org.junit.Test;
  * @version:
  **/
 public class BinarySearch {
-
-    /**
-     * 二分法查找第一个大于target的值
-     *
-     * @param nums
-     * @param target
-     * @return
-     */
-    public static int binarySearchFirstGt(int[] nums, int target) {
+    public static int find(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
         while (left <= right) {
             int mid = (left + right) >>> 1;
             if (nums[mid] == target) {
-                left = mid + 1;
+                return mid;
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else {
-                right = mid;
+                right = mid - 1;
             }
         }
-        // 1,2,2,2,3,4,513010000179
-
-        // 求第一个返回left, 请最后一个返回right
-        return left >= nums.length ? -1 : left;
+        return -1;
     }
 
     /**
-     * 二分法查找最后一个小于target的值
+     * 二分法查找第一个大于target的值（右边界，不包括target）
      *
      * @param nums
      * @param target
      * @return
      */
-    public static int binarySearchFirstLt(int[] nums, int target) {
+    public static int findRightBound(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;
+        int index = -1;
         while (left <= right) {
-            int mid = left + ((right - left) >>> 1);
+            int mid = (left + right) >>> 1;
             if (nums[mid] == target) {
-                right = mid - 1;
+                left = mid + 1;
+                index = left;
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
             }
         }
-        // 1,2,2,2,3,4,5
-
-        return right < 0 ? -1 : right;
+        return index;
     }
+
+    /**
+     * 二分法查找最后一个小于target的值(左边界，不包括target)
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int findLeftBound(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int index = -1;
+        while (left <= right) {
+            int mid = left + ((right - left) >>> 1);
+            if (nums[mid] == target) {
+                right = mid - 1; // 查找区间[left,right], 所以while使用left<=right保证let=right也能查找
+                index = right;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return index;
+    }
+
 
     @Test
     public void test1() {
         int[] nums = {1, 2, 2, 2, 3, 4, 5};
-        int target = 10;
-        int index = binarySearchFirstLt(nums, target);
-        index = binarySearchFirstGt(nums, target);
+        int target = 2;
+        int leftBound = findLeftBound(nums, target);
+        int rightBound = findRightBound(nums, target);
 
-        System.out.println(index);
-    }
-
-    @Test
-    public void searchRange() {
-        int[] nums = {5, 7, 7, 8, 8, 10};
-        int target = 8;
-        int left = search(nums, target, true);
-        int right = search(nums, target, false) - 1;
         System.out.println();
-    }
-
-    public int search(int[] nums, int target, boolean lower) {
-        int left = 0;
-        int right = nums.length - 1;
-        // 截止条件[right,left] left=right+1
-        while (left <= right) {
-            int mid = ((right - left) >>> 1) + left;
-            if (nums[mid] > target || (lower && nums[mid] == target)) {
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
     }
 }
