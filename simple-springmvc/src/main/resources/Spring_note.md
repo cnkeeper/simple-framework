@@ -151,7 +151,7 @@ doscan
 @EnableAutoConfiguration会扫描所有的spring.factories
 
 #### SpringBoot自动加载的核心
-ConfigurationBeanPostProcess(BeanFactoryPostProcess)后置处理器处理启动类上的@Configuration注解
+ConfigurationClassPostProcess(BeanFactoryPostProcess)后置处理器处理启动类上的@Configuration注解
 > 内部类
 > @PropertySource
 > 解析@ComponentScan注解，扫描所有需要spring接管的类
@@ -161,6 +161,8 @@ ConfigurationBeanPostProcess(BeanFactoryPostProcess)后置处理器处理启动�
 
 
 > Spring中大量的扩展点都是依托于spring内部的处理流程，各种后置处理器，事件监听器
+
+@SpringBootApplication是一个合成注解(@SpringConfiguration, @EnableAutoConfiguration, @ComponentScan)
 
 
 ### BeanFactoryPostProcess
@@ -176,8 +178,11 @@ ConfigurationBeanPostProcess(BeanFactoryPostProcess)后置处理器处理启动�
 ### BeanPostProcess
 #### 方法列表
 ##### 实例化阶段
+InstantiationAwareBeanPostProcessor
 - postProcessBeforeInstantiation
-  对象实例化前生效，可以解决循环依赖中的代理对象问题.
+  对象实例化前生效，返回非null则终止后面流程
+- 实例化创建对象
+
 - postProcessAfterInstantiation
   对象实例化后执行，暂未使用.
 
@@ -193,6 +198,18 @@ ConfigurationBeanPostProcess(BeanFactoryPostProcess)后置处理器处理启动�
   `BeanValidationPostProcessor`在这里完成了限制校验.
   `ConfigurationPropertiesBindingPostProcessor`完成对@ConfigurationProperties的绑定.
   `ApplicationContextAwareProcessor`ApplicationContextAware的注入实现.
+  
+- afterPropertySet+init-method
 - postProcessAfterInitialization
   `AbstractAutoProxyCreator`aop代理对象生成逻辑.
 
+
+
+生成beanfactory
+处理beanfactory(配置一些东西)
+回调beanfactoryprocess
+注册beanprocess
+初始化消息，事件处理组件
+刷新子组件
+开始构建bean
+发布对应事件
