@@ -5,9 +5,10 @@ import java.util.Arrays;
 
 public class Sort {
     /**
-     * 冒泡排序
+     * 问题：用java语言写一段java冒泡排序算法，并分析时间复杂度和空间复杂度
      * 时间复杂度：O(N^2)
      * 最好：O(N)
+     * 空间复杂度：O(1)
      *
      * @param nums
      */

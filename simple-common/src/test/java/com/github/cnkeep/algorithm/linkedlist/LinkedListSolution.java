@@ -81,31 +81,79 @@ public class LinkedListSolution {
      * B
      * 等式：AD+DC+BD = BD+DC+AD
      * 也可以使用map, 先遍历存储第一个链表，在遍历第二个链表判断是否存在与第一个链表中
+     *
      * @return
      */
     public static Node findIntersectNode(Node head1, Node head2) {
         Node cur1 = head1;
         Node cur2 = head2;
         while (cur1 != cur2) {
-            cur1 = cur1==null ? head2 : cur1.next;
-            cur2 = cur2==null ? head1 : cur2.next;
+            cur1 = cur1 == null ? head2 : cur1.next;
+            cur2 = cur2 == null ? head1 : cur2.next;
         }
         return cur1;
     }
 
     /**
      * 反转链表
+     *
      * @param head
      * @return
      */
-    public static Node reverseNode(Node head){
+    public static Node reverseNode(Node head) {
         Node pre = null;
         Node cur = head;
         while (cur != null) {
             Node next = cur.next;
-             cur.next = pre;
-             pre = cur;
-             cur = next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+
+    /**
+     * k个结点一组翻转链表
+     * @param head
+     * @param k
+     * @return
+     */
+    public static Node reverseKGroup(Node head, int k) {
+        Node dummy = new Node(head, -1);
+
+        Node pre = dummy;
+        Node end = dummy;
+        while (end != null) {
+            for (int i = 0; i < k; i++) {
+                end = end.next;
+                if (end == null) {
+                    return dummy.next;
+                }
+            }
+
+            // 暂存子链表前后结点
+            Node start = pre.next;
+            Node next = end.next;
+            // 截断链表并且反转
+            end.next = null;
+            pre.next = reverse(start);
+            start.next = next;
+
+            // 设置下次位置
+            pre = start;
+            end = start;
+        }
+        return dummy.next;
+    }
+
+    public static Node reverse(Node head) {
+        Node pre = null;
+        Node cur = head;
+        while (cur != null) {
+            Node next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
         }
         return pre;
     }
