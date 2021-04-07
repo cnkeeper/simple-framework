@@ -34,15 +34,7 @@ public class CustomizeRunner extends BlockJUnit4ClassRunner {
         Set<FrameworkMethod> methods = new LinkedHashSet<>();
         // 返回所以标记@Test的方法
         methods.addAll(computeTestMethods());
-
-        // 返回所以标记@ITest的方法
-        methods.addAll(computeITestMethods());
-
         return new LinkedList<>(methods);
-    }
-
-    private List<FrameworkMethod> computeITestMethods() {
-        return getTestClass().getAnnotatedMethods(TimeStat.class);
     }
 
     @Override
