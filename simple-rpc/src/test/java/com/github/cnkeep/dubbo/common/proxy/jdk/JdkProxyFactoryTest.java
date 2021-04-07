@@ -169,3 +169,8 @@ public class JdkProxyFactoryTest {
         String echo(String message);
     }
 }
+/**
+ ServiceConfig
+ ReferenceConfig
+
+ **/

@@ -562,7 +562,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * Implements Map.get and related methods.
      *
      * @param hash hash for key
-     * @param key the key
+     * @param key the keyutilutildfa
      * @return the node, or null if none
      */
     final Node<K,V> getNode(int hash, Object key) {

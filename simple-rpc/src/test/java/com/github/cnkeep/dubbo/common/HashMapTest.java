@@ -43,7 +43,7 @@ public class HashMapTest {
     public void transferTreeNodeThresholdTest() {
         HashMap<HashCodeKey, Integer> map = new HashMap<>(8);
         int count = 10;
-        for (int i = 0; i < count; i++) {
+        for (int i = 1; i <= count; i++) {
             map.put(new HashCodeKey("K" + i), i);
         }
 

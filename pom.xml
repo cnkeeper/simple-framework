@@ -25,6 +25,7 @@
         <module>simple-common</module>
         <module>simple-unit</module>
         <module>simple-maven-plugin</module>
+        <module>simple-arthas</module>
     </modules>
 
     <properties>
@@ -42,6 +43,7 @@
         <commons-logging.version>1.2</commons-logging.version>
         <jackson.version>2.9.1</jackson.version>
         <lombok.version>1.18.0</lombok.version>
+        <javax.annotation.version>1.2</javax.annotation.version>
     </properties>
 
     <dependencyManagement>
@@ -124,6 +126,11 @@
                 <groupId>com.github.noconnor</groupId>
                 <artifactId>junitperf</artifactId>
                 <version>1.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>${javax.annotation.version}</version>
             </dependency>
         </dependencies>
 
