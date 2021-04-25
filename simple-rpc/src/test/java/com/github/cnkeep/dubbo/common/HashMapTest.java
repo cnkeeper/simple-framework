@@ -2,9 +2,7 @@ package com.github.cnkeep.dubbo.common;
 
 import org.junit.Test;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -42,7 +40,7 @@ public class HashMapTest {
     @Test
     public void transferTreeNodeThresholdTest() {
         HashMap<HashCodeKey, Integer> map = new HashMap<>(8);
-        int count = 10;
+        int count = 100;
         for (int i = 1; i <= count; i++) {
             map.put(new HashCodeKey("K" + i), i);
         }
@@ -111,6 +109,13 @@ public class HashMapTest {
             }
             System.out.println(Thread.currentThread().getName() + "执行结束完");
         }
+    }
+
+    @Test
+    public void sortTest(){
+        Integer[] arr = {2,11,4};
+        Arrays.sort(arr, (o1, o2) -> o1-o2);
+        System.out.println(Arrays.toString(arr));
     }
 }
 

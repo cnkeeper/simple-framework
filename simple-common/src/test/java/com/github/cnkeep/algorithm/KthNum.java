@@ -29,7 +29,10 @@ public class KthNum {
             }
             tree.add(nums[i]);
             tree.poll();
-            System.out.println(tree);
+//            System.out.println(tree);
+        }
+        for (Integer integer : tree) {
+            System.out.print(integer+",");
         }
         return tree.peek();
     }

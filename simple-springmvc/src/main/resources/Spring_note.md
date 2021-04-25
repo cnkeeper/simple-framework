@@ -129,7 +129,7 @@ ApplicationContextAwareProcessor
 #### BeanDefinitionLoader扫描器, 解析xml/annotation
 
 #### spring.factories文件扫描
-EnumAutoConfigurationImportSelector会调用SpringFactoriesLoader加载所有的spring.factories文件，从而读入configuration配置类名
+EnableAutoConfigurationImportSelector会调用SpringFactoriesLoader加载所有的spring.factories文件，从而读入configuration配置类名
 
 #### @Transactional
 @EnableTransactionManagement
@@ -213,3 +213,8 @@ InstantiationAwareBeanPostProcessor
 刷新子组件
 开始构建bean
 发布对应事件
+
+@SpringBootApplication是一个组合注解，其内部由3个注解组成
+- @EnableAutoConfiguration
+- @SpringBootConfiguration
+- @ComponentScan

@@ -51,17 +51,11 @@ public class PrintABCUsingLock {
     public static void main(String[] args) {
         PrintABCUsingLock loopThread = new PrintABCUsingLock(10);
 
-        new Thread(() -> {
-            loopThread.printLetter1("A", 0);
-        }, "A").start();
+        new Thread(() -> loopThread.printLetter1("A", 0), "A").start();
 
-        new Thread(() -> {
-            loopThread.printLetter1("B", 1);
-        }, "B").start();
+        new Thread(() -> loopThread.printLetter1("B", 1), "B").start();
 
 
-        new Thread(() -> {
-            loopThread.printLetter1("C", 2);
-        }, "C").start();
+        new Thread(() -> loopThread.printLetter1("C", 2), "C").start();
     }
 }
