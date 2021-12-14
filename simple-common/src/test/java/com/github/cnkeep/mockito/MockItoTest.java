@@ -23,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 /**
  * MockItoTest
  *
- * @author LeiLi.Zhang <mailto:zhangleili@bytedance.com>
+ * @author LeiLi.Zhang <mailto:zhangleili924@gmail.com>
  * @date 2021/9/14
  */
 @ExtendWith(MockitoExtension.class)

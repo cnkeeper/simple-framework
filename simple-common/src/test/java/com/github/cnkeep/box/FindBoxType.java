@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * FindBoxType
  *
- * @author LeiLi.Zhang <mailto:zhangleili@bytedance.com>
+ * @author LeiLi.Zhang <mailto:zhangleili924@gmail.com>
  * @date 2021/7/2
  */
 public class FindBoxType {
